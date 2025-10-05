@@ -14,6 +14,15 @@ Seu repositório **apiTesting** está 100% configurado e funcionando perfeitamen
 ✅ 7 requests executados com sucesso  
 ✅ Tempo médio de resposta: 201ms  
 ✅ Push realizado para o GitHub  
+✅ Collection `testesExploratorios.json` adicionada ao repositório  
+✅ Documentação corrigida para refletir testes reais  
+
+### 📊 Cobertura Real dos Testes
+**👤 Usuários:** Listagem, Criação, Exclusão  
+**🔐 Login:** Autenticação básica  
+**🛍️ Produtos:** Listagem, Criação (autenticado)  
+**🛒 Carrinhos:** Listagem básica  
+**🧹 Cleanup:** Limpeza automática de dados  
 
 ## 📋 Próximos Passos
 
