@@ -12,10 +12,11 @@ Seu repositório **apiTesting** está 100% configurado e funcionando perfeitamen
 ✅ Collection executada localmente com Newman  
 ✅ Todos os 31 testes passaram  
 ✅ 7 requests executados com sucesso  
-✅ Tempo médio de resposta: 201ms  
+✅ Tempo médio de resposta: 274ms  
 ✅ Push realizado para o GitHub  
 ✅ Collection `testesExploratorios.json` adicionada ao repositório  
 ✅ Documentação corrigida para refletir testes reais  
+✅ Arquivo backup `old-estesExploratorios.json` ignorado no .gitignore  
 
 ### 📊 Cobertura Real dos Testes
 **👤 Usuários:** Listagem, Criação, Exclusão  

@@ -79,13 +79,14 @@
 **✅ Testes Executados com Sucesso:**
 - 31 assertions passaram
 - 7 requests executados 
-- Tempo médio: 252ms
+- Tempo médio: 274ms
 - 0 falhas
 
 **✅ Arquivos no GitHub:**
 - Collection: `collections/exploratory-tests/testesExploratorios.json`
 - Environment: `environments/ServeRest-DEV.postman_environment.json`
 - Documentação: Todos os READMEs atualizados
+- Backup ignorado: `old-estesExploratorios.json` no .gitignore
 
 ## 🎯 Projeto Pronto Para
 
