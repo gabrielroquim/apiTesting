@@ -66,6 +66,7 @@ coverage/
 # Arquivos específicos do Postman (locais)
 postman_globals.json
 postman_collection_runs.json
+old-estesExploratorios.json
 
 # Newman reports (manter apenas exemplos)
 newman-report-*.html
