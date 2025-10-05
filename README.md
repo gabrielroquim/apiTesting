@@ -43,7 +43,7 @@ Este repositório contém coleções de testes desenvolvidas para a API **[Serve
 
 1. **Clone ou faça fork do repositório:**
    ```bash
-   git clone https://github.com/SEU-USUARIO/apiTesting.git
+   git clone https://github.com/gabrielroquim/apiTesting.git
    ```
 
 2. **Importe no Postman:**
@@ -132,8 +132,8 @@ Cada coleção inclui:
 
 ## 🤝 Contato
 
-- **LinkedIn:** [Seu perfil LinkedIn]
-- **GitHub:** [Seu perfil GitHub]
+- **LinkedIn:** [Gabriel Roquim](https://linkedin.com/in/gabrielroquim)
+- **GitHub:** [gabrielroquim](https://github.com/gabrielroquim)
 - **Email:** [Seu email profissional]
 
 ## 📄 Licença
