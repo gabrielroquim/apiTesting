@@ -1,0 +1,93 @@
+# Arquivos de sistema
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependências
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de build
+dist/
+build/
+out/
+
+# Arquivos temporários
+*.tmp
+*.temp
+.cache/
+
+# Arquivos de configuração sensíveis
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+config/secrets.json
+
+# Relatórios de teste locais
+reports/local/
+test-results/
+coverage/
+*.xml
+*.html
+*.json
+
+# Arquivos de backup
+*.bak
+*.backup
+*~
+
+# Arquivos específicos do Postman (locais)
+postman_globals.json
+postman_collection_runs.json
+
+# Newman reports (manter apenas exemplos)
+newman-report-*.html
+newman-report-*.json
+!examples/reports/
+
+# Arquivos de dados sensíveis
+**/sensitive-data/
+**/credentials/
+**/tokens/
+
+# Arquivos pessoais
+personal-notes.md
+TODO.md
+.personal/
+
+# Sistema operacional
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Linux
+*~
