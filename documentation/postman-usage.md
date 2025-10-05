@@ -1,17 +1,24 @@
 # 📚 Guia de Uso do Postman - Coleções ServeRest
 
-## 🚀 Introdução
+## 🚀 Pré-requisitos
 
-Este guia explica como usar as coleções do Postman para testar a API ServeRest de forma eficiente e organizada.
+### 📦 Servidor Local Obrigatório
+Antes de usar as collections, inicie o servidor ServeRest localmente:
+
+```bash
+npx serverest@latest
+```
+
+O servidor será executado em `http://localhost:3000`
 
 ## 📥 Importação das Coleções
 
 ### 1. Download dos Arquivos
 ```bash
 # Clone o repositório
-git clone https://github.com/SEU-USUARIO/apiTesting.git
+git clone https://github.com/gabrielroquim/apiTesting.git
 
-# Ou baixe os arquivos específicos:
+# Arquivos necessários:
 # - collections/exploratory-tests/testesExploratorios.json
 # - environments/ServeRest-DEV.postman_environment.json
 ```
@@ -29,19 +36,23 @@ git clone https://github.com/SEU-USUARIO/apiTesting.git
 
 ### Seleção do Environment
 1. No canto superior direito, clique no dropdown de environments
-2. Selecione **ServeRest - DEV Environment**
-3. Verifique se a variável `baseUrl` está definida como `https://serverest.dev`
+2. Selecione **ServeRest - DEV Environment (Local)**
+3. Verifique se a variável `baseUrl` está definida como `http://localhost:3000`
 
-### Variáveis Principais
+### Variáveis da Collection Atual
 ```javascript
-// Variáveis configuradas automaticamente
-baseUrl: "https://serverest.dev"
-userEmail: "" // Preenchido automaticamente
-userPassword: "" // Preenchido automaticamente
-authToken: "" // Gerado após login
-userId: "" // ID do usuário criado
-productId: "" // ID do produto criado
-cartId: "" // ID do carrinho criado
+// Variáveis configuradas na collection
+idUsuario: "" // ID do usuário criado (preenchido automaticamente)
+administrador: "true" // Tipo de usuário padrão
+baseUrl: "http://localhost:3000" // Servidor local
+```
+
+### Variáveis Dinâmicas Geradas
+```javascript
+// Geradas automaticamente nos pre-request scripts
+nomeUsuario: "gandalf_XXXX" // Nome único
+senhaUsuario: "senhaXXXX" // Senha única
+emailUsuario: "mago_cor@hobbit.org" // Email com cor aleatória
 ```
 
 ## 🎮 Executando os Testes

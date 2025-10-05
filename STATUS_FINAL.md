@@ -20,22 +20,36 @@ Todas as correções foram aplicadas e o projeto está pronto para uso profissio
 
 ### 📊 Cobertura Real
 **Implementado e Funcionando:**
-- 👤 **Usuários:** GET /usuarios, POST /usuarios, DELETE /usuarios/{id}
-- 🔐 **Login:** POST /login
-- 🛍️ **Produtos:** GET /produtos, POST /produtos (autenticado)
-- 🛒 **Carrinhos:** GET /carrinhos
-- 🧹 **Cleanup:** Limpeza automática de dados
+- 👤 **Usuários (CRUD Completo):** 
+  - POST /usuarios (Cadastrar com dados únicos)
+  - GET /usuarios/{id} (Buscar por ID)
+  - PUT /usuarios/{id} (Atualizar dados)
+  - GET /usuarios (Listar todos)
+  - DELETE /usuarios/{id} (Deletar)
+
+**🎲 Funcionalidades Especiais:**
+- Geração automática de dados únicos (gandalf_XXXX)
+- Emails criativos com 25+ cores (mago_cor@hobbit.org)
+- Senhas dinâmicas (senhaXXXX)
+- Fluxo end-to-end completo
+- Cleanup automático de dados
+
+**🖥️ Servidor Local:**
+- Comando: `npx serverest@latest`
+- Base URL: `http://localhost:3000`
+- Testes otimizados para execução local
 
 ### 🔗 Links Ativos
 - **Repositório:** https://github.com/gabrielroquim/apiTesting
-- **API Base:** https://serverest.dev
+- **API Local:** http://localhost:3000 (após `npx serverest@latest`)
 - **Documentação:** README.md no repositório
 
 ### 📋 Documentação Atualizada
-- ✅ README.md - Informações gerais e instruções
-- ✅ collections/exploratory-tests/README.md - Detalhes da collection
-- ✅ PROXIMO_PASSO.md - Guia de próximos passos
-- ✅ CORRECOES_REALIZADAS.md - Histórico de correções
+- ✅ README.md - Instruções para servidor local
+- ✅ collections/exploratory-tests/README.md - CRUD completo de usuários
+- ✅ environments/ServeRest-DEV.postman_environment.json - Configurado para localhost
+- ✅ documentation/postman-usage.md - Guia atualizado para servidor local
+- ✅ documentation/test-strategy.md - Cobertura real vs planejada
 - ✅ .gitignore - Configurado para ignorar backups
 
 ### 🚀 Pronto Para

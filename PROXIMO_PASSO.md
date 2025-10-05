@@ -19,11 +19,18 @@ Seu repositório **apiTesting** está 100% configurado e funcionando perfeitamen
 ✅ Arquivo backup `old-estesExploratorios.json` ignorado no .gitignore  
 
 ### 📊 Cobertura Real dos Testes
-**👤 Usuários:** Listagem, Criação, Exclusão  
-**🔐 Login:** Autenticação básica  
-**🛍️ Produtos:** Listagem, Criação (autenticado)  
-**🛒 Carrinhos:** Listagem básica  
-**🧹 Cleanup:** Limpeza automática de dados  
+**👤 Usuários (CRUD Completo):**  
+- ✅ Cadastrar usuários (POST /usuarios) - Dados dinâmicos únicos
+- ✅ Buscar usuário por ID (GET /usuarios/{id}) - Validação de perfil
+- ✅ Atualizar usuário (PUT /usuarios/{id}) - Dados aleatórios
+- ✅ Listar usuários (GET /usuarios) - Validação de campos
+- ✅ Deletar usuário (DELETE /usuarios/{id}) - Cleanup automático
+
+**🎲 Funcionalidades Especiais:**
+- Geração de nomes únicos (gandalf_XXXX)
+- Emails criativos com paleta de cores (mago_cor@hobbit.org)
+- Senhas dinâmicas (senhaXXXX)
+- Fluxo end-to-end completo  
 
 ## 📋 Próximos Passos
 
@@ -36,29 +43,41 @@ Agora você pode compartilhar seu projeto profissional no LinkedIn:
 Acabei de finalizar um repositório completo de testes exploratórios para a API ServeRest usando Postman e Newman.
 
 🔧 Tecnologias:
-• Postman Collections
+• Postman Collections (CRUD completo)
 • Newman (CLI)
 • GitHub Actions (CI/CD)
-• JavaScript (testes automatizados)
+• JavaScript (dados dinâmicos)
+• ServeRest Local (npx serverest@latest)
 
 ✨ Características:
-• Testes exploratórios estruturados
-• Validação automática via CI/CD
+• CRUD completo de usuários
+• Geração automática de dados únicos
+• Emails criativos com paleta de cores
+• Fluxo end-to-end validado
+• Servidor local para testes rápidos
 • Documentação técnica completa
 • Política fork-only
 
 Um agradecimento especial ao @Paulo Gonçalves pela excelente API ServeRest que torna possível praticar testes de API de forma gratuita!
 
-#APITesting #Postman #QA #TestAutomation #GitHub
+#APITesting #Postman #QA #TestAutomation #GitHub #ServeRest
 
 🔗 https://github.com/gabrielroquim/apiTesting
 ```
 
+### 🚨 Requisito Importante
+**Servidor Local:** Para executar os testes, primeiro rode:
+```bash
+npx serverest@latest
+```
+**Base URL:** http://localhost:3000
+
 ### 2. Desenvolver Mais Collections 📚
-- [ ] Testes funcionais completos
-- [ ] Testes de performance
-- [ ] Testes de segurança
-- [ ] Testes de carga
+- [ ] Expandir para endpoints de login
+- [ ] Adicionar testes de produtos  
+- [ ] Implementar testes de carrinhos
+- [ ] Criar testes de performance
+- [ ] Desenvolver testes de segurança
 
 ### 3. Configurações Opcionais no GitHub ⚙️
 

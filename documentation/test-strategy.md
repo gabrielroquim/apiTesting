@@ -74,21 +74,30 @@ Documentar a estratégia de testes para a API ServeRest, definindo tipos de test
 | `/usuarios/{id}` | GET | ✅ | ⏳ | ⏳ | ⏳ |
 | `/usuarios/{id}` | PUT | ✅ | ⏳ | ⏳ | ⏳ |
 | `/usuarios/{id}` | DELETE | ✅ | ⏳ | ⏳ | ⏳ |
-| `/login` | POST | ✅ | ⏳ | ⏳ | ⏳ |
-| `/produtos` | GET | ✅ | ⏳ | ⏳ | ⏳ |
-| `/produtos` | POST | ✅ | ⏳ | ⏳ | ⏳ |
-| `/produtos/{id}` | GET | ✅ | ⏳ | ⏳ | ⏳ |
-| `/produtos/{id}` | PUT | ✅ | ⏳ | ⏳ | ⏳ |
-| `/produtos/{id}` | DELETE | ✅ | ⏳ | ⏳ | ⏳ |
-| `/carrinhos` | GET | ✅ | ⏳ | ⏳ | ⏳ |
-| `/carrinhos` | POST | ✅ | ⏳ | ⏳ | ⏳ |
-| `/carrinhos/concluir-compra` | DELETE | ✅ | ⏳ | ⏳ | ⏳ |
-| `/carrinhos/cancelar-compra` | DELETE | ✅ | ⏳ | ⏳ | ⏳ |
+| `/login` | POST | ❌ | ⏳ | ⏳ | ⏳ |
+| `/produtos` | GET | ❌ | ⏳ | ⏳ | ⏳ |
+| `/produtos` | POST | ❌ | ⏳ | ⏳ | ⏳ |
+| `/produtos/{id}` | GET | ❌ | ⏳ | ⏳ | ⏳ |
+| `/produtos/{id}` | PUT | ❌ | ⏳ | ⏳ | ⏳ |
+| `/produtos/{id}` | DELETE | ❌ | ⏳ | ⏳ | ⏳ |
+| `/carrinhos` | GET | ❌ | ⏳ | ⏳ | ⏳ |
+| `/carrinhos` | POST | ❌ | ⏳ | ⏳ | ⏳ |
+| `/carrinhos/concluir-compra` | DELETE | ❌ | ⏳ | ⏳ | ⏳ |
+| `/carrinhos/cancelar-compra` | DELETE | ❌ | ⏳ | ⏳ | ⏳ |
 
 **Legenda:**
-- ✅ Implementado
-- ⏳ Planejado
-- ❌ Não aplicável
+- ✅ Implementado (CRUD completo de usuários)
+- ⏳ Planejado (futuras collections)
+- ❌ Não incluído na collection atual
+
+### 📋 Detalhamento da Collection Atual
+
+**Testes Exploratórios - Usuários:**
+- **Cadastrar usuários** - Dados dinâmicos com paleta de cores
+- **Buscar por ID** - Validação de perfil administrador
+- **Atualizar usuário** - Dados aleatórios do Postman
+- **Listar usuários** - Verificação de campos obrigatórios
+- **Deletar usuário** - Cleanup automático
 
 ## 🔧 Ferramentas Utilizadas
 

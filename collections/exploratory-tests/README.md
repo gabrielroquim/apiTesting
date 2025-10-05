@@ -1,102 +1,121 @@
 # 🔍 Testes Exploratórios - API ServeRest
 
-## 📋 Descrição
+## 🚀 Pré-requisitos
 
-Esta coleção contém testes exploratórios para a API ServeRest, focando na descoberta de funcionalidades, validações de endpoints e identificação de comportamentos não documentados.
+### 📦 Inicializando o Servidor Local
+Antes de executar os testes, você precisa iniciar o servidor ServeRest localmente:
 
-## 🎯 Objetivos dos Testes
+```bash
+npx serverest@latest
+```
 
-- **Exploração de Endpoints:** Validar todos os endpoints disponíveis
-- **Descoberta de Comportamentos:** Identificar respostas não documentadas
-- **Validação de Dados:** Verificar estruturas de resposta
-- **Cenários de Erro:** Testar comportamentos em situações adversas
+O servidor será iniciado em `http://localhost:3000`
+
+### ⚙️ Configuração da Collection
+- **Base URL:** `http://localhost:3000`
+- **Environment:** ServeRest-DEV (configure com a baseUrl correta)
+- **Variáveis:** A collection usa variáveis dinâmicas para gerar dados únicos
 
 ## 📊 Cobertura de Testes
 
-### 👤 Usuários (/usuarios)
-- ✅ Listagem de usuários
-- ✅ Cadastro de usuário
-- ✅ Exclusão de usuário (cleanup)
-- 🔄 Busca por ID (planejado)
-- 🔄 Atualização de dados (planejado)
-- 🔄 Validações de campo obrigatório (planejado)
-- 🔄 Teste de duplicação de email (planejado)
+### 👤 Usuários (/usuarios) - CRUD Completo
+- ✅ **Cadastrar usuários** - POST /usuarios
+  - Gera dados aleatórios (nome como "gandalf_XXXX", email com paleta de cores)
+  - Valida status 201 e mensagem de sucesso
+  - Salva ID do usuário criado
+- ✅ **Buscar usuário por ID** - GET /usuarios/{id}
+  - Valida status 200
+  - Verifica se o perfil é administrador
+- ✅ **Atualizar usuário** - PUT /usuarios/{id}
+  - Usa dados aleatórios do Postman ($randomFirstName, $randomEmail)
+  - Valida status 201 e mensagem "Registro alterado com sucesso"
+- ✅ **Listar usuários** - GET /usuarios
+  - Valida status 200
+  - Verifica campos obrigatórios (nome, email, password, administrador)
+- ✅ **Deletar usuário por ID** - DELETE /usuarios/{id}
+  - Valida mensagem "Registro excluído com sucesso"
 
-### 🔐 Login (/login)
-- ✅ Login com usuário válido
-- 🔄 Login com credenciais inválidas (planejado)
-- 🔄 Validação de token de autorização (planejado)
-- 🔄 Teste de expiração de token (planejado)
+## 🔄 Fluxo de Execução
+A collection executa um CRUD completo de usuários:
+1. **Cadastra** um usuário com dados únicos
+2. **Busca** o usuário criado por ID
+3. **Atualiza** os dados do usuário
+4. **Lista** todos os usuários
+5. **Deleta** o usuário criado
 
-### 🛍️ Produtos (/produtos)
-- ✅ Listagem de produtos
-- ✅ Cadastro de produto (autenticado)
-- 🔄 Busca por ID (planejado)
-- 🔄 Atualização de produto (planejado)
-- 🔄 Exclusão de produto (planejado)
-- 🔄 Upload de imagem (planejado)
-- 🔄 Validações de estoque (planejado)
+## 🧪 Funcionalidades de Teste
 
-### 🛒 Carrinhos (/carrinhos)
-- ✅ Listagem de carrinhos
-- 🔄 Busca por ID (planejado)
-- 🔄 Criação de carrinho (planejado)
-- 🔄 Finalização de compra (planejado)
-- 🔄 Cancelamento de compra (planejado)
+### 🎲 Geração Dinâmica de Dados
+- **Nomes:** `gandalf_` + número aleatório (0-9999)
+- **Senhas:** `senha` + número aleatório (0-9999)
+- **Emails:** `mago_` + cor aleatória + `@hobbit.org`
+- **Paleta de cores:** 25+ cores diferentes para emails únicos
 
-## 🔧 Configuração
+### ✅ Validações Implementadas
+- Status codes (200, 201, 400)
+- Mensagens de resposta específicas
+- Campos obrigatórios nas respostas
+- Persistência de dados (ID do usuário entre requests)
 
-### Variáveis de Environment
+### 📝 Cenários de Teste
+- ✅ Casos de sucesso (201 Created, 200 OK)
+- ✅ Casos de erro (400 Bad Request - email duplicado, email inválido)
+- ✅ Responses de exemplo documentados
+- ✅ Validação de campos obrigatórios
+
+## 🔧 Configuração Técnica
+
+### Variáveis da Collection
 ```json
 {
-  "baseUrl": "https://serverest.dev",
-  "userEmail": "",
-  "userPassword": "",
-  "authToken": "",
-  "userId": "",
-  "productId": "",
-  "cartId": ""
+  "idUsuario": "",
+  "administrador": "true",
+  "baseUrl": "http://localhost:3000"
 }
 ```
 
 ### Pre-request Scripts
-- Geração de dados aleatórios para testes
-- Configuração automática de tokens
-- Limpeza de dados entre testes
+- Geração automática de nomes únicos
+- Criação de emails com paleta de cores aleatória
+- Configuração de senhas dinâmicas
 
-### Tests Scripts
-- Validação de códigos de status
-- Verificação de schemas JSON
-- Testes de performance (tempo de resposta)
-- Validação de headers de segurança
+### Test Scripts
+- Validação de status codes específicos
+- Verificação de mensagens de resposta
+- Salvamento de IDs para uso posterior
+- Verificação de campos obrigatórios
 
 ## 📈 Métricas Esperadas
 
-- **Taxa de Sucesso dos Códigos de Status:** > 95%
-- **Tempo de Resposta:** < 2000ms
-- **Validação de Schema:** 100%
-- **Cobertura:** Todos os endpoints principais
+- **Taxa de Sucesso:** 100% (quando servidor local está rodando)
+- **Tempo de Resposta:** < 100ms (servidor local)
+- **Cobertura:** CRUD completo de usuários
+- **Validações:** 15+ testes automatizados
 
-## 🐛 Bugs Identificados
+## 🚨 Requisitos Importantes
 
-*Documentar aqui quaisquer bugs ou comportamentos inesperados encontrados durante os testes exploratórios*
+1. **Servidor Local Obrigatório:** Execute `npx serverest@latest` antes dos testes
+2. **Base URL:** Deve estar configurada como `http://localhost:3000`
+3. **Environment:** Use ServeRest-DEV com configuração local
 
 ## 📝 Observações
 
-- Todos os dados são criados e limpos automaticamente
-- Não deixa dados residuais no servidor
-- Testes podem ser executados repetidamente
-- Coleção independente, não requer configuração externa
+- Collection completamente independente
+- Não requer autenticação prévia
+- Dados são criados e removidos automaticamente
+- Pode ser executada repetidamente sem conflitos
+- Focada em testes exploratórios do endpoint /usuarios
 
 ## 🔄 Próximos Passos
 
-1. Expandir testes de segurança
-2. Adicionar testes de valores limite
-3. Implementar testes de carga básicos
-4. Adicionar validações de acessibilidade da API
+1. Expandir para outros endpoints (produtos, login, carrinhos)
+2. Adicionar testes de cenários negativos
+3. Implementar validações de schema JSON
+4. Adicionar testes de performance
 
 ---
 
 **Criado por:** Gabriel  
 **Data:** Outubro 2025  
+**Foco:** CRUD completo de usuários com dados dinâmicos  
 **LinkedIn:** [Post sobre testes exploratórios](#)

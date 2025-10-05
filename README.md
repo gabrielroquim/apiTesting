@@ -47,6 +47,16 @@ Este repositório contém coleções de testes desenvolvidas para a API **[Serve
 
 ## 🚀 Como Usar
 
+### 📦 Configuração do Servidor Local
+
+**IMPORTANTE:** Para executar os testes, você precisa iniciar o servidor ServeRest localmente:
+
+```bash
+npx serverest@latest
+```
+
+O servidor será iniciado em `http://localhost:3000`
+
 ### 📥 Download e Importação
 
 1. **Clone ou faça fork do repositório:**
@@ -61,20 +71,24 @@ Este repositório contém coleções de testes desenvolvidas para a API **[Serve
    - Importe também os environments
 
 3. **Configure o Environment:**
-   - Selecione o environment `ServeRest-DEV`
-   - Verifique se a `baseUrl` está configurada como `https://serverest.dev`
+   - Selecione o environment `ServeRest-DEV (Local)`
+   - Verifique se a `baseUrl` está configurada como `http://localhost:3000`
+   - Certifique-se de que o servidor ServeRest está rodando
 
 ### 🎮 Executando os Testes
 
 #### Testes Exploratórios
 ```bash
-# Via Interface do Postman
-1. Selecione a coleção "Testes Exploratórios"
+# 1. PRIMEIRO: Inicie o servidor local
+npx serverest@latest
+
+# 2. Via Interface do Postman
+1. Selecione a coleção "1 - Testes Exploratorios"
 2. Clique em "Run Collection"
 3. Configure as iterações e delay
 4. Execute e analise os resultados
 
-# Via Newman (CLI)
+# 3. Via Newman (CLI)
 newman run collections/exploratory-tests/testesExploratorios.json \
   -e environments/ServeRest-DEV.postman_environment.json \
   --reporters html,cli
@@ -84,9 +98,13 @@ newman run collections/exploratory-tests/testesExploratorios.json \
 
 ### 🔍 Testes Exploratórios
 - **Arquivo:** `collections/exploratory-tests/testesExploratorios.json`
-- **Objetivo:** Exploração da API ServeRest
-- **Cobertura:** Endpoints principais, validações básicas, cenários de erro
-- **Post LinkedIn:** [Link do post](#)
+- **Objetivo:** CRUD completo de usuários com dados dinâmicos
+- **Cobertura:** Endpoints /usuarios (CREATE, READ, UPDATE, DELETE)
+- **Funcionalidades:**
+  - Geração automática de dados únicos (gandalf_XXXX, mago_cor@hobbit.org)
+  - Validações completas de status codes e mensagens
+  - Fluxo end-to-end de usuários
+- **Servidor:** Requer servidor local (`npx serverest@latest`)
 
 ### 🔄 Futuras Coleções
 - **Testes Funcionais:** Validações completas de funcionalidades

@@ -1,436 +1,862 @@
 {
-  "info": {
-    "name": "Testes Exploratórios - ServeRest API",
-    "description": "Collection de testes exploratórios para a API ServeRest\n\n**Objetivo:** Explorar e validar funcionalidades básicas da API ServeRest\n**Base URL:** https://serverest.dev\n**Autor:** Gabriel\n**LinkedIn:** [Link para seus posts sobre testes]\n\n## Como usar:\n1. Importe esta collection no Postman\n2. Importe o environment ServeRest-DEV\n3. Execute a collection completa ou requests individuais\n\n## Cobertura Atual:\n- ✅ Usuários (listagem, criação, exclusão)\n- ✅ Login (autenticação básica)\n- ✅ Produtos (listagem, criação autenticada)\n- ✅ Carrinhos (listagem básica)\n- 🧹 Cleanup (limpeza de dados de teste)\n\n## Próximas Implementações:\n- 🔄 CRUD completo de usuários\n- 🔄 Validações de login (casos negativos)\n- 🔄 CRUD completo de produtos\n- 🔄 Operações completas de carrinho\n\n## Validações:\n- Status codes\n- Response schemas\n- Response times\n- Headers de segurança\n- Cenários de sucesso",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_uid": "12345678-1234-1234-1234-123456789012"
-  },
-  "item": [
-    {
-      "name": "👤 Usuários",
-      "item": [
-        {
-          "name": "Listar usuários",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "// Validar status code",
-                  "pm.test('Status deve ser 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "// Validar tempo de resposta",
-                  "pm.test('Response time menor que 2000ms', function () {",
-                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
-                  "});",
-                  "",
-                  "// Validar estrutura da resposta",
-                  "pm.test('Resposta deve ter estrutura correta', function () {",
-                  "    const response = pm.response.json();",
-                  "    pm.expect(response).to.have.property('usuarios');",
-                  "    pm.expect(response).to.have.property('quantidade');",
-                  "    pm.expect(response.usuarios).to.be.an('array');",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/usuarios",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "usuarios"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Criar usuário",
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "exec": [
-                  "// Gerar dados únicos para o teste",
-                  "const timestamp = Date.now();",
-                  "const randomEmail = `usuario${timestamp}@teste.com`;",
-                  "const randomName = `Usuario Teste ${timestamp}`;",
-                  "",
-                  "pm.environment.set('userEmail', randomEmail);",
-                  "pm.environment.set('userName', randomName);",
-                  "pm.environment.set('userPassword', 'senha123');"
-                ],
-                "type": "text/javascript"
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "// Validar status code",
-                  "pm.test('Status deve ser 201', function () {",
-                  "    pm.response.to.have.status(201);",
-                  "});",
-                  "",
-                  "// Validar resposta e salvar ID",
-                  "pm.test('Deve retornar ID do usuário', function () {",
-                  "    const response = pm.response.json();",
-                  "    pm.expect(response).to.have.property('_id');",
-                  "    pm.expect(response._id).to.be.a('string');",
-                  "    pm.environment.set('userId', response._id);",
-                  "});",
-                  "",
-                  "// Validar mensagem de sucesso",
-                  "pm.test('Deve retornar mensagem de sucesso', function () {",
-                  "    const response = pm.response.json();",
-                  "    pm.expect(response).to.have.property('message');",
-                  "    pm.expect(response.message).to.include('Cadastro realizado com sucesso');",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"nome\": \"{{userName}}\",\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\",\n  \"administrador\": \"true\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/usuarios",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "usuarios"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "🔐 Login",
-      "item": [
-        {
-          "name": "Login com usuário válido",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "// Validar status code",
-                  "pm.test('Status deve ser 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "// Validar e salvar token",
-                  "pm.test('Deve retornar token de autorização', function () {",
-                  "    const response = pm.response.json();",
-                  "    pm.expect(response).to.have.property('authorization');",
-                  "    pm.expect(response.authorization).to.be.a('string');",
-                  "    pm.environment.set('authToken', response.authorization);",
-                  "});",
-                  "",
-                  "// Validar mensagem de sucesso",
-                  "pm.test('Deve retornar mensagem de login', function () {",
-                  "    const response = pm.response.json();",
-                  "    pm.expect(response).to.have.property('message');",
-                  "    pm.expect(response.message).to.include('Login realizado com sucesso');",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "login"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "🛍️ Produtos",
-      "item": [
-        {
-          "name": "Listar produtos",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "// Validar status code",
-                  "pm.test('Status deve ser 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "// Validar estrutura da resposta",
-                  "pm.test('Resposta deve ter estrutura correta', function () {",
-                  "    const response = pm.response.json();",
-                  "    pm.expect(response).to.have.property('produtos');",
-                  "    pm.expect(response).to.have.property('quantidade');",
-                  "    pm.expect(response.produtos).to.be.an('array');",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/produtos",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "produtos"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Criar produto (autenticado)",
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "exec": [
-                  "// Gerar dados únicos para o produto",
-                  "const timestamp = Date.now();",
-                  "const productName = `Produto Teste ${timestamp}`;",
-                  "const productPrice = Math.floor(Math.random() * 1000) + 10;",
-                  "",
-                  "pm.environment.set('productName', productName);",
-                  "pm.environment.set('productPrice', productPrice);"
-                ],
-                "type": "text/javascript"
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "// Validar status code",
-                  "pm.test('Status deve ser 201', function () {",
-                  "    pm.response.to.have.status(201);",
-                  "});",
-                  "",
-                  "// Validar resposta e salvar ID",
-                  "pm.test('Deve retornar ID do produto', function () {",
-                  "    const response = pm.response.json();",
-                  "    pm.expect(response).to.have.property('_id');",
-                  "    pm.expect(response._id).to.be.a('string');",
-                  "    pm.environment.set('productId', response._id);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "{{authToken}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"nome\": \"{{productName}}\",\n  \"preco\": {{productPrice}},\n  \"descricao\": \"Produto criado automaticamente para testes exploratórios\",\n  \"quantidade\": 100\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/produtos",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "produtos"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "🛒 Carrinhos",
-      "item": [
-        {
-          "name": "Listar carrinhos",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "// Validar status code",
-                  "pm.test('Status deve ser 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "// Validar estrutura da resposta",
-                  "pm.test('Resposta deve ter estrutura correta', function () {",
-                  "    const response = pm.response.json();",
-                  "    pm.expect(response).to.have.property('carrinhos');",
-                  "    pm.expect(response).to.have.property('quantidade');",
-                  "    pm.expect(response.carrinhos).to.be.an('array');",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/carrinhos",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "carrinhos"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "🧹 Cleanup",
-      "item": [
-        {
-          "name": "Excluir usuário criado",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "// Validar status code",
-                  "pm.test('Status deve ser 200', function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "// Limpar variáveis do environment",
-                  "pm.test('Cleanup de variáveis', function () {",
-                  "    pm.environment.unset('userId');",
-                  "    pm.environment.unset('userEmail');",
-                  "    pm.environment.unset('userName');",
-                  "    pm.environment.unset('userPassword');",
-                  "    pm.environment.unset('authToken');",
-                  "    pm.environment.unset('productId');",
-                  "    pm.environment.unset('productName');",
-                  "    pm.environment.unset('productPrice');",
-                  "    ",
-                  "    console.log('✅ Cleanup realizado com sucesso');",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/usuarios/{{userId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "usuarios",
-                "{{userId}}"
-              ]
-            }
-          }
-        }
-      ]
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          "// Script global executado antes de cada request",
-          "console.log('🚀 Executando: ' + pm.info.requestName);",
-          "",
-          "// Verificar se baseUrl está configurada",
-          "if (!pm.environment.get('baseUrl')) {",
-          "    console.log('⚠️ baseUrl não configurada. Usando padrão.');",
-          "    pm.environment.set('baseUrl', 'https://serverest.dev');",
-          "}"
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          "// Script global executado após cada request",
-          "console.log('✅ Finalizado: ' + pm.info.requestName);",
-          "console.log('📊 Status: ' + pm.response.code);",
-          "console.log('⏱️ Tempo: ' + pm.response.responseTime + 'ms');",
-          "",
-          "// Validações globais",
-          "pm.test('Headers de segurança básicos', function () {",
-          "    // Verificar se há headers mínimos de segurança",
-          "    pm.expect(pm.response.headers.has('content-type')).to.be.true;",
-          "});",
-          "",
-          "pm.test('Response time aceitável', function () {",
-          "    pm.expect(pm.response.responseTime).to.be.below(5000);",
-          "});"
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "https://serverest.dev",
-      "type": "string"
-    }
-  ]
+	"info": {
+		"_postman_id": "c8d1d67c-5c75-4688-8a61-757b052ece2d",
+		"name": "1 - Testes Exploratorios",
+		"description": "#### 1\\. Listar Usuários\n\n- **Método:** GET\n    \n- **URL:** `/usuarios`\n    \n- **Descrição:** Retorna uma lista de todos os usuários cadastrados.\n    \n- **Resposta:**\n    \n- **200 OK:** Lista de usuários em formato JSON.\n    \n- **500 Internal Server Error:** Erro interno do servidor.\n    \n\n#### 2\\. Buscar Usuário\n\n- **Método:** GET\n    \n- **URL:** `/usuarios/{id}`\n    \n- **Descrição:** Retorna os detalhes de um usuário específico.\n    \n- **Parâmetros:**\n    \n- `id` (path): ID do usuário a ser buscado.\n    \n- **Resposta:**\n    \n- **200 OK:** Detalhes do usuário em formato JSON.\n    \n- **404 Not Found:** Usuário não encontrado.\n    \n\n#### 3\\. Cadastrar Usuário\n\n- **Método:** POST\n    \n- **URL:** `/usuarios`\n    \n- **Descrição:** Cadastra um novo usuário.\n    \n- **Corpo da Requisição:** Objeto JSON com as informações do usuário.\n    \n- **Resposta:**\n    \n- **201 Created:** Usuário cadastrado com sucesso.\n    \n- **400 Bad Request:** Requisição inválida.\n    \n\n#### 4\\. Atualizar Usuário\n\n- **Método:** PUT\n    \n- **URL:** `/usuarios/{id}`\n    \n- **Descrição:** Atualiza as informações de um usuário existente.\n    \n- **Parâmetros:**\n    \n- `id` (path): ID do usuário a ser atualizado.\n    \n- **Corpo da Requisição:** Objeto JSON com as informações atualizadas do usuário.\n    \n- **Resposta:**\n    \n- **200 OK:** Usuário atualizado com sucesso.\n    \n- **404 Not Found:** Usuário não encontrado.\n    \n\n#### 5\\. Deletar Usuário\n\n- **Método:** DELETE\n    \n- **URL:** `/usuarios/{id}`\n    \n- **Descrição:** Deleta um usuário existente.\n    \n- **Parâmetros:**\n    \n- `id` (path): ID do usuário a ser deletado.\n    \n- **Resposta:**\n    \n- **204 No Content:** Usuário deletado com sucesso.\n    \n- **404 Not Found:** Usuário não encontrado.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28339579"
+	},
+	"item": [
+		{
+			"name": "Cadastrar usuarios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status 201 e mensagem de sucesso\", function () {\r",
+							"    // Verifica status code\r",
+							"    pm.expect(pm.response.code).to.eql(201);\r",
+							"    \r",
+							"    // Verifica mensagem no response\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso\");\r",
+							"});\r",
+							"\r",
+							"// Salva a resposta JSON para uso futuro\r",
+							"const resposta = pm.response.json();\r",
+							"pm.collectionVariables.set(\"idUsuario\", resposta._id);\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Gerar um nome aleatório\r",
+							"pm.variables.set('nomeUsuario', `gandalf_${Math.floor(Math.random() * 10000)}`);\r",
+							"\r",
+							"// Gerar uma senha aleatória\r",
+							"pm.variables.set('senhaUsuario', `senha${Math.floor(Math.random() * 10000)}`);\r",
+							"\r",
+							"\r",
+							"// Função para gerar paleta de cores aleatória\r",
+							"function paletadcores() {\r",
+							"    const cores = [\r",
+							"        'vermelho', 'azul', 'verde', 'amarelo', 'roxo', 'laranja', 'rosa', \r",
+							"        'marrom', 'preto', 'branco', 'cinza', 'violeta', 'turquesa', 'dourado', \r",
+							"        'prata','coral', 'magenta', 'ciano', 'bege', 'aqua', 'navy', 'olive', \r",
+							"        'crimson', 'khaki', 'plum'\r",
+							"    ];\r",
+							"    \r",
+							"    // Seleciona uma cor aleatória\r",
+							"    const corEscolhida = cores[Math.floor(Math.random() * cores.length)];\r",
+							"    \r",
+							"    return `${corEscolhida}`;\r",
+							"}\r",
+							"\r",
+							"// Gerar um email dinâmico com paleta de cores\r",
+							"pm.variables.set('emailUsuario', `mago_${paletadcores()}@hobbit.org`);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"{{nomeUsuario}}\",\n    \"email\": \"{{emailUsuario}}\",\n    \"password\": \"{{senhaUsuario}}\",\n    \"administrador\": \"{{administrador}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/usuarios",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"usuarios"
+					],
+					"query": [
+						{
+							"key": "administrador",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "fulano@qa.com",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "201 Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Gabs Testes QC\",\n    \"email\": \"ogabs2@qa.com.br\",\n    \"password\": \"123456\",\n    \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n  \"message\": \"Cadastro realizado com sucesso\",\r\n  \"_id\": \"...\" // ID gerado automaticamente pode variar\r\n}"
+				},
+				{
+					"name": "400 Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Gabs Testes QC\",\n    \"email\": \"ogabs2@qa.com.br\",\n    \"password\": \"123456\",\n    \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Este email já está sendo usado\"\n}"
+				},
+				{
+					"name": "Email inválido",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"{{nomeUsuario}}\",\n    \"email\": \"{{emailUsuario}}\",\n    \"password\": \"{{senhaUsuario}}\",\n    \"administrador\": \"{{administrador}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							],
+							"query": [
+								{
+									"key": "administrador",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "fulano@qa.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "x-dns-prefetch-control",
+							"value": "off"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "strict-transport-security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "x-download-options",
+							"value": "noopen"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "x-xss-protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "50"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 05 Oct 2025 18:53:03 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"email\": \"email deve ser um email válido\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Buscar user ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Verifica se o perfil é administrador\r",
+							"pm.test(\"Perfil é administrador\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response.administrador).to.equal(\"true\"); // \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/usuarios/{{idUsuario}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"usuarios",
+						"{{idUsuario}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/b3fajFX4xf342sp2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"b3fajFX4xf342sp2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\n    \"nome\": \"Fulano da Silva\",\n    \"email\": \"fulano@qa.com\",\n    \"password\": \"teste\",\n    \"administrador\": \"true\",\n    \"_id\": \"0uxuPY0cbmQhpEz1\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Atualizar user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status 201 e mensagem de sucesso\", function () {",
+							"    // Verifica status code",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"    ",
+							"    // Verifica mensagem no JSON",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.message).to.eql(\"Registro alterado com sucesso\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"{{$randomFirstName}}\",\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"{{$randomPassword}}\",\n    \"administrador\": \"{{administrador}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/usuarios/:_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"usuarios",
+						":_id"
+					],
+					"query": [
+						{
+							"key": "administrador",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "fulano@qa.com",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "_id",
+							"value": "{{idUsuario}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "400 Bad Request",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \n    \"nome\": \"Gabs Testes atualizado\",\n    \"email\": \"ogabs@qa.com.br\",\n    \"password\": \"123456\",\n    \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/b3fajFX4xf342sp2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"b3fajFX4xf342sp2"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "[\r\n  {\r\n    \"message\": \"Este email já está sendo usado\"\r\n  },\r\n  {\r\n    \"email\": \"email deve ser um email válido\"\r\n  },\r\n  {\r\n    \"nome\": \"nome não pode ficar em branco\"\r\n}\r\n]"
+				},
+				{
+					"name": "200 OK",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \n    \"nome\": \"Gabs Testes atualizado\",\n    \"email\": \"ogabs@qa.com.br\",\n    \"password\": \"123456\",\n    \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/:_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								":_id"
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\r\n    \"message\": \"Registro alterado com sucesso\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Lista user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code é 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Todos os usuários têm os campos esperados\", function () {\r",
+							"  var jsonData = pm.response.json();\r",
+							"  jsonData.usuarios.forEach(function (usuario) {\r",
+							"    pm.expect(usuario).to.have.property(\"nome\");\r",
+							"    pm.expect(usuario).to.have.property(\"email\");\r",
+							" pm.expect(usuario).to.have.property(\"password\");\r",
+							"  pm.expect(usuario).to.have.property(\"administrador\");\r",
+							"  });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/usuarios",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"usuarios"
+					],
+					"query": [
+						{
+							"key": "administrador",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "fulano@qa.com",
+							"disabled": true
+						}
+					]
+				},
+				"description": "StartFragment\n\n## Endpoint GET Usuários\n\n### Visão Geral\n\nEste endpoint recupera uma lista de usuários do sistema. É uma requisição HTTP GET simples que não requer parâmetros.\n\n### Requisição\n\n- **Método:** GET\n    \n- **URL:** `{{baseUrl}}/usuarios`\n    \n\n## Resposta\n\nA resposta retornará um objeto JSON contendo os seguintes campos:\n\n- `quantidade`: Um inteiro que representa o número total de usuários recuperados.\n    \n- `usuarios`: Uma matriz de objetos de usuário, onde cada objeto de usuário contém:\n    \n- `nome`: O nome do usuário (string).\n    \n- `email`: O endereço de e-mail do usuário (string).\n    \n- `password`: A senha do usuário (string).\n    \n- `administrador`: Um booleano que indica se o usuário tem privilégios administrativos.\n    \n- `_id`: Um identificador único para o usuário (string).\n    \n\n## Exemplo de Resposta\n\n``` json\n{\n  \"quantidade\": 1,\n  \"usuarios\": [\n    {\n      \"nome\": \"Fulano da Silva\",\n      \"email\": \"fulano@qa.com\",\n      \"password\": \"teste\",\n      \"administrador\": true,\n      \"_id\": \".ssdddsds3343\"\n    }\n  ]\n}\n\n ```\n\n## Notes\n\nEste endpoint é útil para aplicativos que precisam exibir informações de usuário ou gerenciar funcionalidades relacionadas a usuários.\n\nSe não houver usuários no sistema, o campo `quantidade` será 0 e a matriz `usuarios` estará vazia."
+			},
+			"response": [
+				{
+					"name": "200 OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							],
+							"query": [
+								{
+									"key": "administrador",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "fulano@qa.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"quantidade\": 1,\n    \"usuarios\": [\n        {\n            \"nome\": \"Fulano da Silva\",\n            \"email\": \"fulano@qa.com\",\n            \"password\": \"teste\",\n            \"administrador\": \"true\",\n            \"_id\": \"0uxuPY0cbmQhpEz1\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Lista user",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							],
+							"query": [
+								{
+									"key": "administrador",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "fulano@qa.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "x-dns-prefetch-control",
+							"value": "off"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "strict-transport-security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "x-download-options",
+							"value": "noopen"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "x-xss-protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2754"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 17 Sep 2025 23:25:13 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"quantidade\": 13,\n    \"usuarios\": [\n        {\n            \"nome\": \"Fulano da Silva\",\n            \"email\": \"fulano@qa.com\",\n            \"password\": \"teste\",\n            \"administrador\": \"true\",\n            \"_id\": \"0uxuPY0cbmQhpEz1\"\n        },\n        {\n            \"nome\": \"Gabs New\",\n            \"email\": \"Laverne.Rowe@gmail.com\",\n            \"password\": \"123456\",\n            \"administrador\": \"true\",\n            \"_id\": \"CfxfWPy7P8HirwXh\"\n        },\n        {\n            \"nome\": \"Kaden\",\n            \"email\": \"Aniya.Dietrich9@hotmail.com\",\n            \"password\": \"Jrq18YAxmSakEHo\",\n            \"administrador\": \"true\",\n            \"_id\": \"DYzwcmk3NIosT1GC\"\n        },\n        {\n            \"nome\": \"Jaylin\",\n            \"email\": \"gdr@testes.br\",\n            \"password\": \"123456\",\n            \"administrador\": \"true\",\n            \"_id\": \"Jnb2wYwE309gLIQF\"\n        },\n        {\n            \"nome\": \"Delta\",\n            \"email\": \"Stan41@gmail.com\",\n            \"password\": \"y_2eW3Hjbohnt7a\",\n            \"administrador\": \"true\",\n            \"_id\": \"LiegIYlyR6obmwD6\"\n        },\n        {\n            \"nome\": \"Gabs New\",\n            \"email\": \"Dominic83@gmail.com\",\n            \"password\": \"123456\",\n            \"administrador\": \"true\",\n            \"_id\": \"OIHTclIiJjWj97bx\"\n        },\n        {\n            \"nome\": \"Nola\",\n            \"email\": \"Kianna18@hotmail.com\",\n            \"password\": \"123456\",\n            \"administrador\": \"true\",\n            \"_id\": \"Owr5KDUUWoxhIGdi\"\n        },\n        {\n            \"nome\": \"Gabs New\",\n            \"email\": \"Ignatius_Feeney35@gmail.com\",\n            \"password\": \"123456\",\n            \"administrador\": \"true\",\n            \"_id\": \"PvAL1PY81WKqIGqu\"\n        },\n        {\n            \"nome\": \"Gabs New\",\n            \"email\": \"Malika_Schiller@hotmail.com\",\n            \"password\": \"123456\",\n            \"administrador\": \"true\",\n            \"_id\": \"UqfGu2zA1TEVWpeN\"\n        },\n        {\n            \"nome\": \"Gabs New\",\n            \"email\": \"Dewayne41@gmail.com\",\n            \"password\": \"123456\",\n            \"administrador\": \"true\",\n            \"_id\": \"el4T64THarHtW4UW\"\n        },\n        {\n            \"nome\": \"Gabs New\",\n            \"email\": \"Orion_Weimann@yahoo.com\",\n            \"password\": \"123456\",\n            \"administrador\": \"true\",\n            \"_id\": \"oURgstHdjshgeZS2\"\n        },\n        {\n            \"nome\": \"Manuela\",\n            \"email\": \"Ida_Goyette36@gmail.com\",\n            \"password\": \"123456\",\n            \"administrador\": \"true\",\n            \"_id\": \"oeroQ9hP8anjF4DM\"\n        },\n        {\n            \"nome\": \"Gabs New\",\n            \"email\": \"ogabs@qa.com.tr\",\n            \"password\": \"123456\",\n            \"administrador\": \"true\",\n            \"_id\": \"vuGxWZue5gvddxQs\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Deletar user por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Registro excluído com sucesso\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Registro excluído com sucesso\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/usuarios/:_id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"usuarios",
+						":_id"
+					],
+					"variable": [
+						{
+							"key": "_id",
+							"value": "{{idUsuario}}"
+						}
+					]
+				},
+				"description": "**DELETE /usuarios/:_id**\n\nEste endpoint é utilizado para excluir um usuário do sistema com base no seu identificador único (ID).\n\n**Parâmetros da Requisição**\n\n- `_id` (parâmetro de caminho): O identificador único do usuário que você deseja excluir. Este parâmetro é obrigatório e deve ser fornecido na URL.\n    \n\n**Resposta**\n\nApós a exclusão bem-sucedida do usuário, a API retornará uma resposta com a seguinte estrutura:\n\n- Código de Status: 200 OK\n    \n- Tipo de Conteúdo: application/json\n    \n- Corpo:\n    \n- `message`: Uma mensagem de confirmação que indica o sucesso da exclusão. A mensagem será uma string vazia.\n    \n\n**Exemplo de Resposta**\n\n``` json\n{\n    \"message\": \"Registro excluído com sucesso\"\n}\n\n ```\n\nEste endpoint é fundamental para gerenciar contas de usuário, permitindo a remoção de usuários quando necessário."
+			},
+			"response": [
+				{
+					"name": "200 OK - Excluído com Sucesso",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/:_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								":_id"
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "{{idUsuario}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"message\": \"Registro excluído com sucesso\"\r\n}"
+				},
+				{
+					"name": "200 OK - Nenhum encontrado",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/b3fajFX4xf342sp2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"b3fajFX4xf342sp2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\r\n    \"message\": \"Nenhum registro excluído\"\r\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "idUsuario",
+			"value": ""
+		},
+		{
+			"key": "administrador",
+			"value": "true"
+		},
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000"
+		}
+	]
 }
