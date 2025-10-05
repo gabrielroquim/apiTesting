@@ -1,4 +1,6 @@
-# 🎉 Projeto Configurado com Sucesso!
+# 🎉 Projeto Configurado c│   ├── 🔍 exploratory-tests/
+│   │   ├── testesExploratorios.json
+│   │   └── README.md (📋 Documentação dos testes)Sucesso!
 
 ## ✅ Status do Projeto
 

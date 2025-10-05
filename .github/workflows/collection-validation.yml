@@ -59,8 +59,8 @@ jobs:
         mkdir -p reports
         
         # Executar collection se existir
-        if [ -f "collections/exploratory-tests/Testes_Exploratorios.postman_collection.json" ]; then
-          newman run "collections/exploratory-tests/Testes_Exploratorios.postman_collection.json" \
+        if [ -f "collections/exploratory-tests/testesExploratorios.json" ]; then
+          newman run "collections/exploratory-tests/testesExploratorios.json" \
             -e "environments/ServeRest-DEV.postman_environment.json" \
             --delay-request 1000 \
             --timeout-request 10000 \

@@ -65,7 +65,7 @@ ls -la
 ### 3. Importar Collection
 1. Clique em **Import** novamente
 2. Selecione **Upload Files**
-3. Navegue até: `collections/exploratory-tests/Testes_Exploratorios.postman_collection.json`
+3. Navegue até: `collections/exploratory-tests/testesExploratorios.json`
 4. Clique **Import**
 
 ### 4. Configurar Environment
@@ -106,7 +106,7 @@ npm install -g newman-reporter-html
 newman --version
 
 # Executar collection via CLI
-newman run collections/exploratory-tests/Testes_Exploratorios.postman_collection.json \
+newman run collections/exploratory-tests/testesExploratorios.json \
   -e environments/ServeRest-DEV.postman_environment.json
 ```
 

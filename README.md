@@ -8,10 +8,18 @@
 
 Este repositório contém coleções de testes desenvolvidas para a API **[ServeRest](https://serverest.dev)** - uma API REST gratuita que simula uma loja virtual, ideal para praticar testes de API.
 
-### 🔗 API Utilizada
+> 🚧 **Projeto em Construção:** Este repositório está sendo constantemente aprimorado para se tornar uma referência completa em testes de API. Novas coleções e funcionalidades serão adicionadas regularmente.
+
+### 🔗 API Utilizada - ServeRest
 - **URL Base:** `https://serverest.dev`
 - **Documentação:** [Documentação ServeRest](https://serverest.dev)
 - **Swagger:** [Documentação da API](https://serverest.dev/swagger)
+
+### 🙏 Agradecimentos
+**Agradecimento especial ao [Paulo Gonçalves](https://github.com/PauloGoncalvesBH)** e toda a comunidade **ServeRest** por disponibilizar esta excelente API gratuita para a comunidade de testes. A **ServeRest** é fundamental para o aprendizado e prática de testes de API no Brasil.
+
+- **Repositório ServeRest:** https://github.com/ServeRest/ServeRest
+- **Criador:** Paulo Gonçalves (@PauloGoncalvesBH)
 
 ## 📁 Estrutura do Repositório
 
@@ -19,7 +27,7 @@ Este repositório contém coleções de testes desenvolvidas para a API **[Serve
 📦 apiTesting/
 ├── 🧪 collections/
 │   ├── 🔍 exploratory-tests/
-│   │   ├── Testes_Exploratorios.postman_collection.json
+│   │   ├── testesExploratorios.json
 │   │   └── README.md
 │   ├── 🔧 functional-tests/
 │   │   └── (futuras coleções)
@@ -67,7 +75,7 @@ Este repositório contém coleções de testes desenvolvidas para a API **[Serve
 4. Execute e analise os resultados
 
 # Via Newman (CLI)
-newman run collections/exploratory-tests/Testes_Exploratorios.postman_collection.json \
+newman run collections/exploratory-tests/testesExploratorios.json \
   -e environments/ServeRest-DEV.postman_environment.json \
   --reporters html,cli
 ```
@@ -75,7 +83,7 @@ newman run collections/exploratory-tests/Testes_Exploratorios.postman_collection
 ## 📝 Coleções Disponíveis
 
 ### 🔍 Testes Exploratórios
-- **Arquivo:** `collections/exploratory-tests/Testes_Exploratorios.postman_collection.json`
+- **Arquivo:** `collections/exploratory-tests/testesExploratorios.json`
 - **Objetivo:** Exploração da API ServeRest
 - **Cobertura:** Endpoints principais, validações básicas, cenários de erro
 - **Post LinkedIn:** [Link do post](#)
@@ -87,16 +95,28 @@ newman run collections/exploratory-tests/Testes_Exploratorios.postman_collection
 
 ## 🛡️ Política de Contribuição
 
-### ⚠️ Importante
-- **Apenas FORKS e DOWNLOADS são permitidos**
-- **NÃO são aceitos Pull Requests**
-- **NÃO são aceitas alterações diretas**
+### ⚠️ Importante - Repositório Fork-Only
+- **✅ PERMITIDO:**
+  - **Fazer FORK** do repositório
+  - **Download** das coleções
+  - **Issues** para sugestões e dúvidas
+  - **Stars** no repositório
+
+- **❌ NÃO PERMITIDO:**
+  - **Pull Requests** (não serão aceitos)
+  - **Commits diretos** na branch main
+  - **Merge** de código externo
+  - **Alterações nas branches** principais
+  - **Modificações colaborativas**
 
 ### 📋 Como Contribuir
-1. Faça um **fork** do repositório
-2. Trabalhe em seu próprio fork
-3. Compartilhe seu trabalho independentemente
-4. Para sugestões, abra uma **Issue** (apenas sugestões, não PRs)
+1. **Faça um FORK** do repositório para sua conta
+2. **Trabalhe livremente** em seu próprio fork
+3. **Use como base** para seus projetos pessoais
+4. **Para sugestões:** Abra uma **Issue** (apenas sugestões, não código)
+5. **Compartilhe** seu trabalho derivado independentemente
+
+> **💡 Filosofia:** Este é um repositório pessoal de portfólio. Forks são encorajados para uso e aprendizado, mas o código principal é mantido pelo autor original.
 
 ## 🎯 Conteúdo LinkedIn
 

@@ -12,7 +12,7 @@ Este guia explica como usar as coleções do Postman para testar a API ServeRest
 git clone https://github.com/SEU-USUARIO/apiTesting.git
 
 # Ou baixe os arquivos específicos:
-# - collections/exploratory-tests/Testes_Exploratorios.postman_collection.json
+# - collections/exploratory-tests/testesExploratorios.json
 # - environments/ServeRest-DEV.postman_environment.json
 ```
 
@@ -21,7 +21,7 @@ git clone https://github.com/SEU-USUARIO/apiTesting.git
 2. Clique em **Import** (canto superior esquerdo)
 3. Arraste os arquivos `.json` ou clique em **Upload Files**
 4. Selecione os arquivos:
-   - Coleção: `Testes_Exploratorios.postman_collection.json`
+   - Coleção: `testesExploratorios.json`
    - Environment: `ServeRest-DEV.postman_environment.json`
 5. Clique em **Import**
 
@@ -108,14 +108,14 @@ npm install -g newman-reporter-html
 
 #### Execução Básica:
 ```bash
-newman run collections/exploratory-tests/Testes_Exploratorios.postman_collection.json \
+newman run collections/exploratory-tests/testesExploratorios.json \
   -e environments/ServeRest-DEV.postman_environment.json \
   --delay-request 1000
 ```
 
 #### Com Relatórios:
 ```bash
-newman run collections/exploratory-tests/Testes_Exploratorios.postman_collection.json \
+newman run collections/exploratory-tests/testesExploratorios.json \
   -e environments/ServeRest-DEV.postman_environment.json \
   --reporters html,cli \
   --reporter-html-export results/report.html \
