@@ -53,6 +53,11 @@ coverage/
 *.html
 *.json
 
+# Exceções para arquivos importantes do projeto
+!collections/**/*.json
+!environments/*.json
+!package*.json
+
 # Arquivos de backup
 *.bak
 *.backup

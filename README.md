@@ -154,7 +154,6 @@ Cada coleção inclui:
 
 - **LinkedIn:** [Gabriel Roquim](https://linkedin.com/in/gabrielroquim)
 - **GitHub:** [gabrielroquim](https://github.com/gabrielroquim)
-- **Email:** [Seu email profissional]
 
 ## 📄 Licença
 

@@ -1,0 +1,436 @@
+{
+  "info": {
+    "name": "Testes Exploratórios - ServeRest API",
+    "description": "Collection de testes exploratórios para a API ServeRest\n\n**Objetivo:** Explorar e validar funcionalidades básicas da API ServeRest\n**Base URL:** https://serverest.dev\n**Autor:** Gabriel\n**LinkedIn:** [Link para seus posts sobre testes]\n\n## Como usar:\n1. Importe esta collection no Postman\n2. Importe o environment ServeRest-DEV\n3. Execute a collection completa ou requests individuais\n\n## Cobertura Atual:\n- ✅ Usuários (listagem, criação, exclusão)\n- ✅ Login (autenticação básica)\n- ✅ Produtos (listagem, criação autenticada)\n- ✅ Carrinhos (listagem básica)\n- 🧹 Cleanup (limpeza de dados de teste)\n\n## Próximas Implementações:\n- 🔄 CRUD completo de usuários\n- 🔄 Validações de login (casos negativos)\n- 🔄 CRUD completo de produtos\n- 🔄 Operações completas de carrinho\n\n## Validações:\n- Status codes\n- Response schemas\n- Response times\n- Headers de segurança\n- Cenários de sucesso",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_uid": "12345678-1234-1234-1234-123456789012"
+  },
+  "item": [
+    {
+      "name": "👤 Usuários",
+      "item": [
+        {
+          "name": "Listar usuários",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Validar status code",
+                  "pm.test('Status deve ser 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Validar tempo de resposta",
+                  "pm.test('Response time menor que 2000ms', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "// Validar estrutura da resposta",
+                  "pm.test('Resposta deve ter estrutura correta', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('usuarios');",
+                  "    pm.expect(response).to.have.property('quantidade');",
+                  "    pm.expect(response.usuarios).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Criar usuário",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Gerar dados únicos para o teste",
+                  "const timestamp = Date.now();",
+                  "const randomEmail = `usuario${timestamp}@teste.com`;",
+                  "const randomName = `Usuario Teste ${timestamp}`;",
+                  "",
+                  "pm.environment.set('userEmail', randomEmail);",
+                  "pm.environment.set('userName', randomName);",
+                  "pm.environment.set('userPassword', 'senha123');"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Validar status code",
+                  "pm.test('Status deve ser 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "// Validar resposta e salvar ID",
+                  "pm.test('Deve retornar ID do usuário', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('_id');",
+                  "    pm.expect(response._id).to.be.a('string');",
+                  "    pm.environment.set('userId', response._id);",
+                  "});",
+                  "",
+                  "// Validar mensagem de sucesso",
+                  "pm.test('Deve retornar mensagem de sucesso', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('message');",
+                  "    pm.expect(response.message).to.include('Cadastro realizado com sucesso');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"{{userName}}\",\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\",\n  \"administrador\": \"true\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔐 Login",
+      "item": [
+        {
+          "name": "Login com usuário válido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Validar status code",
+                  "pm.test('Status deve ser 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Validar e salvar token",
+                  "pm.test('Deve retornar token de autorização', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('authorization');",
+                  "    pm.expect(response.authorization).to.be.a('string');",
+                  "    pm.environment.set('authToken', response.authorization);",
+                  "});",
+                  "",
+                  "// Validar mensagem de sucesso",
+                  "pm.test('Deve retornar mensagem de login', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('message');",
+                  "    pm.expect(response.message).to.include('Login realizado com sucesso');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛍️ Produtos",
+      "item": [
+        {
+          "name": "Listar produtos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Validar status code",
+                  "pm.test('Status deve ser 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Validar estrutura da resposta",
+                  "pm.test('Resposta deve ter estrutura correta', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('produtos');",
+                  "    pm.expect(response).to.have.property('quantidade');",
+                  "    pm.expect(response.produtos).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/produtos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Criar produto (autenticado)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Gerar dados únicos para o produto",
+                  "const timestamp = Date.now();",
+                  "const productName = `Produto Teste ${timestamp}`;",
+                  "const productPrice = Math.floor(Math.random() * 1000) + 10;",
+                  "",
+                  "pm.environment.set('productName', productName);",
+                  "pm.environment.set('productPrice', productPrice);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Validar status code",
+                  "pm.test('Status deve ser 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "// Validar resposta e salvar ID",
+                  "pm.test('Deve retornar ID do produto', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('_id');",
+                  "    pm.expect(response._id).to.be.a('string');",
+                  "    pm.environment.set('productId', response._id);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"{{productName}}\",\n  \"preco\": {{productPrice}},\n  \"descricao\": \"Produto criado automaticamente para testes exploratórios\",\n  \"quantidade\": 100\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/produtos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛒 Carrinhos",
+      "item": [
+        {
+          "name": "Listar carrinhos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Validar status code",
+                  "pm.test('Status deve ser 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Validar estrutura da resposta",
+                  "pm.test('Resposta deve ter estrutura correta', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('carrinhos');",
+                  "    pm.expect(response).to.have.property('quantidade');",
+                  "    pm.expect(response.carrinhos).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/carrinhos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "carrinhos"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🧹 Cleanup",
+      "item": [
+        {
+          "name": "Excluir usuário criado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Validar status code",
+                  "pm.test('Status deve ser 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Limpar variáveis do environment",
+                  "pm.test('Cleanup de variáveis', function () {",
+                  "    pm.environment.unset('userId');",
+                  "    pm.environment.unset('userEmail');",
+                  "    pm.environment.unset('userName');",
+                  "    pm.environment.unset('userPassword');",
+                  "    pm.environment.unset('authToken');",
+                  "    pm.environment.unset('productId');",
+                  "    pm.environment.unset('productName');",
+                  "    pm.environment.unset('productPrice');",
+                  "    ",
+                  "    console.log('✅ Cleanup realizado com sucesso');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "{{userId}}"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Script global executado antes de cada request",
+          "console.log('🚀 Executando: ' + pm.info.requestName);",
+          "",
+          "// Verificar se baseUrl está configurada",
+          "if (!pm.environment.get('baseUrl')) {",
+          "    console.log('⚠️ baseUrl não configurada. Usando padrão.');",
+          "    pm.environment.set('baseUrl', 'https://serverest.dev');",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Script global executado após cada request",
+          "console.log('✅ Finalizado: ' + pm.info.requestName);",
+          "console.log('📊 Status: ' + pm.response.code);",
+          "console.log('⏱️ Tempo: ' + pm.response.responseTime + 'ms');",
+          "",
+          "// Validações globais",
+          "pm.test('Headers de segurança básicos', function () {",
+          "    // Verificar se há headers mínimos de segurança",
+          "    pm.expect(pm.response.headers.has('content-type')).to.be.true;",
+          "});",
+          "",
+          "pm.test('Response time aceitável', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://serverest.dev",
+      "type": "string"
+    }
+  ]
+}

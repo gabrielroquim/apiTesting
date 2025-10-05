@@ -15,34 +15,34 @@ Esta coleção contém testes exploratórios para a API ServeRest, focando na de
 
 ### 👤 Usuários (/usuarios)
 - ✅ Listagem de usuários
-- ✅ Busca por ID
 - ✅ Cadastro de usuário
-- ✅ Atualização de dados
-- ✅ Exclusão de usuário
-- ✅ Validações de campo obrigatório
-- ✅ Teste de duplicação de email
+- ✅ Exclusão de usuário (cleanup)
+- 🔄 Busca por ID (planejado)
+- 🔄 Atualização de dados (planejado)
+- 🔄 Validações de campo obrigatório (planejado)
+- 🔄 Teste de duplicação de email (planejado)
 
 ### 🔐 Login (/login)
-- ✅ Login com credenciais válidas
-- ✅ Login com credenciais inválidas
-- ✅ Validação de token de autorização
-- ✅ Teste de expiração de token
+- ✅ Login com usuário válido
+- 🔄 Login com credenciais inválidas (planejado)
+- 🔄 Validação de token de autorização (planejado)
+- 🔄 Teste de expiração de token (planejado)
 
 ### 🛍️ Produtos (/produtos)
 - ✅ Listagem de produtos
-- ✅ Busca por ID
 - ✅ Cadastro de produto (autenticado)
-- ✅ Atualização de produto
-- ✅ Exclusão de produto
-- ✅ Upload de imagem
-- ✅ Validações de estoque
+- 🔄 Busca por ID (planejado)
+- 🔄 Atualização de produto (planejado)
+- 🔄 Exclusão de produto (planejado)
+- 🔄 Upload de imagem (planejado)
+- 🔄 Validações de estoque (planejado)
 
 ### 🛒 Carrinhos (/carrinhos)
 - ✅ Listagem de carrinhos
-- ✅ Busca por ID
-- ✅ Criação de carrinho
-- ✅ Finalização de compra
-- ✅ Cancelamento de compra
+- 🔄 Busca por ID (planejado)
+- 🔄 Criação de carrinho (planejado)
+- 🔄 Finalização de compra (planejado)
+- 🔄 Cancelamento de compra (planejado)
 
 ## 🔧 Configuração
 
