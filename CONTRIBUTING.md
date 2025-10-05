@@ -25,7 +25,7 @@ Este repositório serve como **portfólio pessoal** e base para **conteúdo do L
 
 Se você encontrou um bug ou tem uma sugestão, **entre em contato comigo pelo LinkedIn**:
 
-**📱 LinkedIn:** [Gabriel Roquim](https://www.linkedin.com/in/gabriel-roquim/)
+**📱 LinkedIn:** [Gabriel Roquim](https://www.linkedin.com/in/gabsqa/)
 
 Descreva:
 - O problema encontrado
@@ -63,8 +63,7 @@ Para dúvidas sobre uso das collections, consulte:
 ## 📞 Contato
 
 Para questões específicas ou dúvidas técnicas:
-- **📱 LinkedIn:** [Gabriel Roquim](https://www.linkedin.com/in/gabriel-roquim/)
-- **📧 Email:** gabriel.roquim@email.com
+- **📱 LinkedIn:** [Gabriel Roquim](https://www.linkedin.com/in/gabsqa/)
 
 ## 🙏 Agradecimentos
 

@@ -12,8 +12,8 @@
 #### `CONTRIBUTING.md`
 - ❌ **Removido:** Item 2 sobre formatação de issues
 - ❌ **Removido:** Seção sobre issues do GitHub
-- ✅ **Adicionado:** LinkedIn para contato: [Gabriel Roquim](https://www.linkedin.com/in/gabriel-roquim/)
-- ✅ **Adicionado:** Email: gabriel.roquim@email.com
+- ❌ **Removido:** Email para contato
+- ✅ **Adicionado:** LinkedIn para contato: [Gabriel Roquim](https://www.linkedin.com/in/gabsqa/)
 
 #### `.gitignore`
 - ✅ **Adicionado:** Exclusão de funcionalidades não implementadas:
@@ -23,6 +23,8 @@
   CHANGELOG.md
   CHANGELOG.md.bak
   examples/test-results-screenshots/
+  examples/resultados-de-testes/
+  examples/test-results-examples/
   ```
 
 ### 📁 Arquivos Preservados
@@ -40,8 +42,8 @@
 
 ### 📞 Contato Simplificado  
 - **LinkedIn direto** para sugestões e feedback
-- **Email disponível** para questões técnicas
 - **Sem dependência de issues** do GitHub
+- **Contato profissional** via rede social
 
 ### 🚀 Pronto Para Portfolio
 - Repositório "production-ready"
@@ -61,8 +63,7 @@
 
 ## 🔗 Links Finais
 
-- **📱 LinkedIn:** [Gabriel Roquim](https://www.linkedin.com/in/gabriel-roquim/)
-- **📧 Email:** gabriel.roquim@email.com
+- **📱 LinkedIn:** [Gabriel Roquim](https://www.linkedin.com/in/gabsqa/)
 - **🔗 Repositório:** https://github.com/gabrielroquim/apiTesting
 - **🧪 Testes:** 100% funcionais com servidor local
 
