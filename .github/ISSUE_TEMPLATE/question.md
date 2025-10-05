@@ -1,8 +1,8 @@
 ---
 name: ❓ Pergunta
-about: Fazer uma pergunta sobre o uso das collections
+about: Fazer uma pergunta sobre o uso das coleções
 title: '[PERGUNTA] '
-labels: ['question', 'help-wanted']
+labels: ['pergunta', 'precisa-ajuda']
 assignees: ''
 
 ---
@@ -12,7 +12,7 @@ Faça sua pergunta de forma clara e concisa.
 
 ## 🎯 Contexto
 Forneça contexto sobre o que você está tentando fazer:
-- Qual collection você está usando?
+- Qual coleção você está usando?
 - Qual seu objetivo?
 - O que você já tentou?
 
@@ -20,12 +20,12 @@ Forneça contexto sobre o que você está tentando fazer:
 - [ ] Li a documentação no README
 - [ ] Verifiquei o guia de uso do Postman
 - [ ] Procurei issues similares
-- [ ] Tentei diferentes approaches
+- [ ] Tentei diferentes abordagens
 
-## 📋 Environment
-**Postman Version:** [ex: 10.20.0]
-**OS:** [ex: Windows 11]
-**Collection:** [nome da collection]
+## 📋 Ambiente
+**Versão do Postman:** [ex: 10.20.0]
+**SO:** [ex: Windows 11]
+**Coleção:** [nome da coleção]
 **Environment:** [nome do environment]
 
 ## 📝 Detalhes Adicionais

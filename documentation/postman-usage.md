@@ -2,9 +2,9 @@
 
 ## 🚀 Introdução
 
-Este guia explica como usar as collections do Postman para testar a API ServeRest de forma eficiente e organizada.
+Este guia explica como usar as coleções do Postman para testar a API ServeRest de forma eficiente e organizada.
 
-## 📥 Importação das Collections
+## 📥 Importação das Coleções
 
 ### 1. Download dos Arquivos
 ```bash
@@ -21,7 +21,7 @@ git clone https://github.com/SEU-USUARIO/apiTesting.git
 2. Clique em **Import** (canto superior esquerdo)
 3. Arraste os arquivos `.json` ou clique em **Upload Files**
 4. Selecione os arquivos:
-   - Collection: `Testes_Exploratorios.postman_collection.json`
+   - Coleção: `Testes_Exploratorios.postman_collection.json`
    - Environment: `ServeRest-DEV.postman_environment.json`
 5. Clique em **Import**
 
@@ -49,19 +49,19 @@ cartId: "" // ID do carrinho criado
 ### 1. Execução Manual (Request por Request)
 
 #### Para Testes Individuais:
-1. Expanda a collection **Testes Exploratórios**
-2. Selecione um request específico
+1. Expanda a coleção **Testes Exploratórios**
+2. Selecione uma requisição específica
 3. Clique em **Send**
 4. Analise a resposta na aba **Body**
 5. Verifique os testes na aba **Test Results**
 
 #### Exemplo - Criar Usuário:
 ```javascript
-// Pre-request Script (automático)
+// Script Pré-requisição (automático)
 pm.environment.set("userEmail", `usuario${Date.now()}@teste.com`);
 pm.environment.set("userPassword", "senha123");
 
-// Request Body (automático)
+// Corpo da Requisição (automático)
 {
   "nome": "Usuario Teste",
   "email": "{{userEmail}}",
@@ -69,7 +69,7 @@ pm.environment.set("userPassword", "senha123");
   "administrador": "true"
 }
 
-// Tests (automático)
+// Testes (automático)
 pm.test("Status deve ser 201", function () {
     pm.response.to.have.status(201);
 });
@@ -84,11 +84,11 @@ pm.test("Deve retornar ID do usuário", function () {
 ### 2. Execução em Lote (Collection Runner)
 
 #### Via Interface Gráfica:
-1. Clique com botão direito na collection
+1. Clique com botão direito na coleção
 2. Selecione **Run collection**
 3. Configure as opções:
    - **Iterations:** 1 (para teste básico)
-   - **Delay:** 1000ms (entre requests)
+   - **Delay:** 1000ms (entre requisições)
    - **Data file:** Nenhum (usar dados automáticos)
 4. Clique em **Run Testes Exploratórios**
 

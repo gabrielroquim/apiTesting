@@ -1,0 +1,139 @@
+name: 🧪 Collection Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Executa diariamente às 9h UTC (6h BR)
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  validate-collections:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    - name: 📦 Install Newman
+      run: |
+        npm install -g newman
+        npm install -g newman-reporter-html
+        npm install -g newman-reporter-htmlextra
+        
+    - name: ✅ Validate Collection Structure
+      run: |
+        echo "🔍 Validating collection files..."
+        
+        # Verificar se os arquivos existem
+        if [ ! -f "environments/ServeRest-DEV.postman_environment.json" ]; then
+          echo "❌ Environment file not found"
+          exit 1
+        fi
+        
+        # Verificar estrutura JSON dos environments
+        echo "📋 Validating environment JSON..."
+        cat environments/ServeRest-DEV.postman_environment.json | jq empty
+        
+        echo "✅ Collection structure validation passed"
+        
+    - name: 🧪 Run Exploratory Tests
+      if: hashFiles('collections/exploratory-tests/*.json') != ''
+      run: |
+        echo "🚀 Running Exploratory Tests..."
+        
+        # Criar diretório para relatórios
+        mkdir -p reports
+        
+        # Executar collection se existir
+        if [ -f "collections/exploratory-tests/Testes_Exploratorios.postman_collection.json" ]; then
+          newman run "collections/exploratory-tests/Testes_Exploratorios.postman_collection.json" \
+            -e "environments/ServeRest-DEV.postman_environment.json" \
+            --delay-request 1000 \
+            --timeout-request 10000 \
+            --reporters cli,html,htmlextra \
+            --reporter-html-export reports/exploratory-tests-report.html \
+            --reporter-htmlextra-export reports/exploratory-tests-detailed.html \
+            --reporter-htmlextra-title "Testes Exploratórios - ServeRest API" \
+            --continue-on-error
+        else
+          echo "ℹ️ Exploratory tests collection not found, skipping..."
+        fi
+        
+    - name: 📊 Upload Test Reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-reports-${{ matrix.node-version }}
+        path: reports/
+        retention-days: 30
+        
+    - name: 📈 Test Results Summary
+      if: always()
+      run: |
+        echo "## 📊 Test Execution Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **Node Version:** ${{ matrix.node-version }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Environment:** ServeRest DEV" >> $GITHUB_STEP_SUMMARY
+        echo "- **Execution Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -d "reports" ]; then
+          echo "✅ Test reports generated successfully" >> $GITHUB_STEP_SUMMARY
+          echo "📋 Check the artifacts for detailed reports" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ No test reports generated" >> $GITHUB_STEP_SUMMARY
+        fi
+
+  api-health-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🏥 Check ServeRest API Health
+      run: |
+        echo "🔍 Checking ServeRest API availability..."
+        
+        # Verificar se a API está respondendo
+        response=$(curl -s -o /dev/null -w "%{http_code}" https://serverest.dev/usuarios)
+        
+        if [ $response = "200" ]; then
+          echo "✅ ServeRest API is healthy (HTTP $response)"
+        else
+          echo "❌ ServeRest API is not responding properly (HTTP $response)"
+          exit 1
+        fi
+        
+        # Verificar endpoints principais
+        echo "🧪 Testing main endpoints..."
+        
+        endpoints=("/usuarios" "/produtos" "/carrinhos")
+        
+        for endpoint in "${endpoints[@]}"; do
+          status=$(curl -s -o /dev/null -w "%{http_code}" "https://serverest.dev$endpoint")
+          if [ $status = "200" ]; then
+            echo "✅ $endpoint: OK ($status)"
+          else
+            echo "⚠️ $endpoint: $status"
+          fi
+        done
+        
+    - name: 📊 API Health Summary
+      run: |
+        echo "## 🏥 API Health Check Results" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- **API Base URL:** https://serverest.dev" >> $GITHUB_STEP_SUMMARY
+        echo "- **Check Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "- **Status:** ✅ Healthy" >> $GITHUB_STEP_SUMMARY

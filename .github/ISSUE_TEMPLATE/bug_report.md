@@ -1,8 +1,8 @@
 ---
-name: 🐛 Bug Report
-about: Reportar um bug encontrado nas collections
+name: 🐛 Relatório de Bug
+about: Reportar um bug encontrado nas coleções
 title: '[BUG] '
-labels: ['bug', 'needs-investigation']
+labels: ['bug', 'necessita-investigação']
 assignees: ''
 
 ---
@@ -25,22 +25,22 @@ Uma descrição clara e concisa do que realmente aconteceu.
 ## 📸 Screenshots
 Se aplicável, adicione screenshots para ajudar a explicar seu problema.
 
-## 🌍 Environment
-**Collection:** [ex: Testes Exploratórios]
-**Postman Version:** [ex: 10.20.0]
-**OS:** [ex: macOS Ventura]
-**Newman Version:** [ex: 6.0.0] (se aplicável)
+## 🌍 Ambiente
+**Coleção:** [ex: Testes Exploratórios]
+**Versão do Postman:** [ex: 10.20.0]
+**SO:** [ex: macOS Ventura]
+**Versão do Newman:** [ex: 6.0.0] (se aplicável)
 
-## 📋 Collection Info
-**Request que falhou:** [nome do request]
+## 📋 Informações da Coleção
+**Requisição que falhou:** [nome da requisição]
 **Environment usado:** [nome do environment]
 **Variáveis relevantes:** [valores das variáveis importantes]
 
 ## 📝 Logs Adicionais
-Adicione qualquer log, error message ou context adicional sobre o problema aqui.
+Adicione qualquer log, mensagem de erro ou contexto adicional sobre o problema aqui.
 
 ## 🎯 Impacto
-- [ ] Bloqueia execução da collection
+- [ ] Bloqueia execução da coleção
 - [ ] Causa falsos positivos
 - [ ] Problema cosmético
 - [ ] Outro: ________

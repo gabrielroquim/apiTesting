@@ -15,7 +15,7 @@ Documentar a estratégia de testes para a API ServeRest, definindo tipos de test
 - Validação de respostas básicas
 - Descoberta de cenários de erro
 
-**Ferramentas:** Postman Collection
+**Ferramentas:** Coleção do Postman
 
 ### 2. ⚙️ Testes Funcionais
 **Objetivo:** Validação completa das funcionalidades
@@ -34,8 +34,8 @@ Documentar a estratégia de testes para a API ServeRest, definindo tipos de test
 **Escopo:**
 - Testes de carga (load testing)
 - Testes de stress
-- Testes de spike
-- Monitoramento de response time
+- Testes de pico
+- Monitoramento de tempo de resposta
 
 **Status:** Planejado
 
@@ -45,7 +45,7 @@ Documentar a estratégia de testes para a API ServeRest, definindo tipos de test
 **Escopo:**
 - Testes de autenticação
 - Validação de autorização
-- Injection attacks (SQL, NoSQL)
+- Ataques de injeção (SQL, NoSQL)
 - Testes de CORS
 
 **Status:** Planejado
@@ -53,13 +53,13 @@ Documentar a estratégia de testes para a API ServeRest, definindo tipos de test
 ## 📊 Pirâmide de Testes
 
 ```
-    🔺 E2E/UI Tests
+    🔺 Testes E2E/UI
        (Manual/Cypress)
          
-    🔺🔺 Integration Tests
-        (Postman Collections)
+    🔺🔺 Testes de Integração
+        (Coleções Postman)
            
-    🔺🔺🔺 Unit Tests
+    🔺🔺🔺 Testes Unitários
          (Jest/Mocha)
 ```
 
@@ -117,9 +117,9 @@ Documentar a estratégia de testes para a API ServeRest, definindo tipos de test
 - **Tempo de Execução:** < 10 minutos
 
 ### Métricas de Performance
-- **Response Time Médio:** < 500ms
-- **Response Time P95:** < 1000ms
-- **Response Time P99:** < 2000ms
+- **Tempo de Resposta Médio:** < 500ms
+- **Tempo de Resposta P95:** < 1000ms
+- **Tempo de Resposta P99:** < 2000ms
 - **Disponibilidade:** > 99%
 
 ## 🔄 Processo de Testes
@@ -128,13 +128,13 @@ Documentar a estratégia de testes para a API ServeRest, definindo tipos de test
 - Análise da documentação da API
 - Definição de cenários de teste
 - Criação de dados de teste
-- Setup de environments
+- Configuração de ambientes
 
 ### 2. Implementação
-- Criação das collections
-- Implementação de pre/post-scripts
+- Criação das coleções
+- Implementação de scripts pré/pós
 - Configuração de validações
-- Setup de CI/CD
+- Configuração de CI/CD
 
 ### 3. Execução
 - Execução manual (exploratória)
@@ -153,7 +153,7 @@ Documentar a estratégia de testes para a API ServeRest, definindo tipos de test
 ### Q4 2025
 - ✅ Implementar testes exploratórios
 - ⏳ Criar testes funcionais básicos
-- ⏳ Setup de CI/CD com GitHub Actions
+- ⏳ Configuração de CI/CD com GitHub Actions
 - ⏳ Implementar relatórios automatizados
 
 ### Q1 2026
@@ -165,7 +165,7 @@ Documentar a estratégia de testes para a API ServeRest, definindo tipos de test
 ### Q2 2026
 - ⏳ Testes de carga avançados
 - ⏳ Integração com ferramentas de APM
-- ⏳ Testes de chaos engineering
+- ⏳ Testes de engenharia do caos
 - ⏳ Automação completa
 
 ## 📝 Boas Práticas
@@ -173,17 +173,17 @@ Documentar a estratégia de testes para a API ServeRest, definindo tipos de test
 ### Organização
 - Nomenclatura clara e consistente
 - Documentação inline nos testes
-- Versionamento das collections
+- Versionamento das coleções
 - Backup regular dos dados
 
 ### Implementação
-- Uso de variáveis de environment
+- Uso de variáveis de ambiente
 - Scripts reutilizáveis
 - Validações robustas
-- Cleanup automático
+- Limpeza automática
 
 ### Manutenção
-- Review regular das collections
+- Revisão regular das coleções
 - Atualização conforme mudanças da API
 - Refatoração de testes obsoletos
 - Otimização de performance

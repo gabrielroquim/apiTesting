@@ -1,0 +1,175 @@
+name: 🧪 Validação das Coleções
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Executa todos os dias às 9h UTC (6h BRT)
+    - cron: '0 9 * * *'
+
+jobs:
+  validate-collections:
+    name: 🔍 Validar Coleções do Postman
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        collection:
+          - collections/exploratory-tests/Testes_Exploratorios.postman_collection.json
+    
+    steps:
+    - name: 📥 Checkout do código
+      uses: actions/checkout@v4
+    
+    - name: 🟢 Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: 📦 Instalar Newman e dependências
+      run: |
+        npm install -g newman
+        npm install -g newman-reporter-html
+        npm install -g newman-reporter-htmlextra
+    
+    - name: 🧪 Executar Testes Exploratórios
+      run: |
+        newman run ${{ matrix.collection }} \
+          -e environments/ServeRest-DEV.postman_environment.json \
+          --delay-request 1000 \
+          --timeout-request 10000 \
+          --reporters cli,html,htmlextra \
+          --reporter-html-export reports/newman-report.html \
+          --reporter-htmlextra-export reports/newman-detailed-report.html \
+          --reporter-htmlextra-logs \
+          --reporter-htmlextra-showOnlyFails
+      continue-on-error: true
+    
+    - name: 📊 Upload dos Relatórios
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-reports-${{ github.run_number }}
+        path: |
+          reports/newman-report.html
+          reports/newman-detailed-report.html
+        retention-days: 30
+    
+    - name: 💬 Comentário no PR (se houver falhas)
+      if: failure() && github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '🚨 **Falhas detectadas nos testes!** Verifique os relatórios nos artifacts da execução.'
+          })
+
+  validate-environment:
+    name: 🌍 Validar Environments
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout do código
+      uses: actions/checkout@v4
+    
+    - name: 🟢 Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: 🔍 Validar JSON dos Environments
+      run: |
+        echo "Validando arquivos JSON dos environments..."
+        for env_file in environments/*.json; do
+          echo "Validando: $env_file"
+          if ! python -m json.tool "$env_file" > /dev/null; then
+            echo "❌ Erro: $env_file não é um JSON válido"
+            exit 1
+          else
+            echo "✅ $env_file é um JSON válido"
+          fi
+        done
+    
+    - name: 🔍 Verificar Variáveis Obrigatórias
+      run: |
+        echo "Verificando variáveis obrigatórias nos environments..."
+        required_vars=("baseUrl" "userEmail" "userPassword" "authToken")
+        
+        for env_file in environments/*.json; do
+          echo "Verificando variáveis em: $env_file"
+          for var in "${required_vars[@]}"; do
+            if ! grep -q "\"$var\"" "$env_file"; then
+              echo "⚠️ Aviso: Variável '$var' não encontrada em $env_file"
+            else
+              echo "✅ Variável '$var' encontrada em $env_file"
+            fi
+          done
+        done
+
+  security-check:
+    name: 🔒 Verificação de Segurança
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout do código
+      uses: actions/checkout@v4
+    
+    - name: 🔍 Verificar Credenciais Hard-coded
+      run: |
+        echo "Verificando por credenciais expostas..."
+        
+        # Padrões perigosos para buscar
+        patterns=(
+          "password.*=.*['\"][^'\"]{3,}"
+          "token.*=.*['\"][^'\"]{10,}"
+          "secret.*=.*['\"][^'\"]{3,}"
+          "key.*=.*['\"][^'\"]{10,}"
+        )
+        
+        found_issues=false
+        
+        for pattern in "${patterns[@]}"; do
+          if grep -r -i -E "$pattern" . --exclude-dir=.git --exclude="*.md"; then
+            echo "⚠️ Possível credencial encontrada com padrão: $pattern"
+            found_issues=true
+          fi
+        done
+        
+        if [ "$found_issues" = true ]; then
+          echo "❌ Possíveis problemas de segurança encontrados!"
+          echo "Revise os arquivos acima para garantir que não há credenciais expostas."
+          exit 1
+        else
+          echo "✅ Nenhuma credencial óbvia encontrada."
+        fi
+    
+    - name: 🔍 Verificar URLs de Produção
+      run: |
+        echo "Verificando por URLs de produção..."
+        
+        prod_patterns=(
+          "https://[^/]*prod[^/]*"
+          "https://[^/]*production[^/]*"
+          "https://api\.[^/]*\.com(?!/test)"
+        )
+        
+        found_prod=false
+        
+        for pattern in "${prod_patterns[@]}"; do
+          if grep -r -i -E "$pattern" . --exclude-dir=.git --exclude="*.md"; then
+            echo "⚠️ Possível URL de produção encontrada: $pattern"
+            found_prod=true
+          fi
+        done
+        
+        if [ "$found_prod" = true ]; then
+          echo "⚠️ URLs de produção encontradas. Certifique-se de que são intencionais."
+        else
+          echo "✅ Nenhuma URL de produção suspeita encontrada."
+        fi

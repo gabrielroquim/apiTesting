@@ -1,8 +1,8 @@
 ---
 name: 💡 Sugestão de Melhoria
-about: Sugerir uma melhoria para as collections ou documentação
+about: Sugerir uma melhoria para as coleções ou documentação
 title: '[SUGESTÃO] '
-labels: ['enhancement', 'suggestion']
+labels: ['melhoria', 'sugestão']
 assignees: ''
 
 ---
@@ -21,7 +21,7 @@ Uma descrição clara e concisa do que você quer que aconteça.
 Uma descrição clara e concisa de quaisquer soluções ou recursos alternativos que você considerou.
 
 ## 📊 Benefícios Esperados
-Como esta melhoria beneficiaria os usuários das collections?
+Como esta melhoria beneficiaria os usuários das coleções?
 - [ ] Melhora a experiência do usuário
 - [ ] Aumenta a cobertura de testes
 - [ ] Melhora a performance
@@ -38,7 +38,7 @@ Que tipo de melhoria é esta?
 - [ ] Novo tipo de validação
 - [ ] Outro: ________
 
-## 📋 Collection Afetada
+## 📋 Coleção Afetada
 - [ ] Testes Exploratórios
 - [ ] Testes Funcionais (futuro)
 - [ ] Testes de Performance (futuro)
@@ -46,7 +46,7 @@ Que tipo de melhoria é esta?
 - [ ] Documentação Geral
 - [ ] Configuração do Projeto
 
-## 📝 Context Adicional
+## 📝 Contexto Adicional
 Adicione qualquer outro contexto ou screenshots sobre a sugestão aqui.
 
 ## 🏷️ Prioridade Sugerida

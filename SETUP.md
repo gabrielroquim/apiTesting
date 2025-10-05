@@ -1,6 +1,6 @@
 # 🚀 Configuração Inicial do Projeto
 
-Este documento guia você através da configuração inicial do projeto API Testing Collections.
+Este documento guia você através da configuração inicial do projeto Coleções de Teste de API.
 
 ## 📋 Pré-requisitos
 

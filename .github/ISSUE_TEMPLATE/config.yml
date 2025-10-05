@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 Documentação
+    url: https://github.com/SEU-USUARIO/apiTesting/blob/main/README.md
+    about: Consulte a documentação completa do projeto
+  - name: 📖 Guia de Uso do Postman
+    url: https://github.com/SEU-USUARIO/apiTesting/blob/main/documentation/postman-usage.md
+    about: Guia detalhado de como usar as collections
+  - name: 💼 LinkedIn
+    url: https://linkedin.com/in/SEU-PERFIL
+    about: Posts sobre testes de API e conteúdo técnico
+  - name: 🌐 API ServeRest
+    url: https://serverest.dev
+    about: Documentação oficial da API utilizada nos testes

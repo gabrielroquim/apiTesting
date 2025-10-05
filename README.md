@@ -1,17 +1,17 @@
-# 🧪 API Testing Collections - ServeRest
+# 🧪 Coleções de Testes de API - ServeRest
 
-> **Collections de testes automatizados para a API ServeRest usando Postman**
+> **Coleções de testes automatizados para a API ServeRest usando Postman**
 > 
 > 📝 *Conteúdo técnico compartilhado no LinkedIn sobre testes de API*
 
 ## 🎯 Sobre o Projeto
 
-Este repositório contém collections de testes desenvolvidas para a API **[ServeRest](https://serverest.dev)** - uma API REST gratuita que simula uma loja virtual, ideal para praticar testes de API.
+Este repositório contém coleções de testes desenvolvidas para a API **[ServeRest](https://serverest.dev)** - uma API REST gratuita que simula uma loja virtual, ideal para praticar testes de API.
 
 ### 🔗 API Utilizada
-- **Base URL:** `https://serverest.dev`
-- **Documentação:** [ServeRest Docs](https://serverest.dev)
-- **Swagger:** [API Documentation](https://serverest.dev/swagger)
+- **URL Base:** `https://serverest.dev`
+- **Documentação:** [Documentação ServeRest](https://serverest.dev)
+- **Swagger:** [Documentação da API](https://serverest.dev/swagger)
 
 ## 📁 Estrutura do Repositório
 
@@ -22,11 +22,11 @@ Este repositório contém collections de testes desenvolvidas para a API **[Serv
 │   │   ├── Testes_Exploratorios.postman_collection.json
 │   │   └── README.md
 │   ├── 🔧 functional-tests/
-│   │   └── (futuras collections)
+│   │   └── (futuras coleções)
 │   ├── 🚀 performance-tests/
-│   │   └── (futuras collections)
+│   │   └── (futuras coleções)
 │   └── 🔐 security-tests/
-│       └── (futuras collections)
+│       └── (futuras coleções)
 ├── 📊 environments/
 │   ├── ServeRest-DEV.postman_environment.json
 │   └── ServeRest-PROD.postman_environment.json
@@ -49,7 +49,7 @@ Este repositório contém collections de testes desenvolvidas para a API **[Serv
 2. **Importe no Postman:**
    - Abra o Postman
    - Clique em `Import`
-   - Selecione os arquivos `.json` das collections
+   - Selecione os arquivos `.json` das coleções
    - Importe também os environments
 
 3. **Configure o Environment:**
@@ -60,8 +60,8 @@ Este repositório contém collections de testes desenvolvidas para a API **[Serv
 
 #### Testes Exploratórios
 ```bash
-# Via Postman UI
-1. Selecione a collection "Testes Exploratórios"
+# Via Interface do Postman
+1. Selecione a coleção "Testes Exploratórios"
 2. Clique em "Run Collection"
 3. Configure as iterações e delay
 4. Execute e analise os resultados
@@ -72,17 +72,17 @@ newman run collections/exploratory-tests/Testes_Exploratorios.postman_collection
   --reporters html,cli
 ```
 
-## 📝 Collections Disponíveis
+## 📝 Coleções Disponíveis
 
 ### 🔍 Testes Exploratórios
 - **Arquivo:** `collections/exploratory-tests/Testes_Exploratorios.postman_collection.json`
 - **Objetivo:** Exploração da API ServeRest
 - **Cobertura:** Endpoints principais, validações básicas, cenários de erro
-- **LinkedIn Post:** [Link do post](#)
+- **Post LinkedIn:** [Link do post](#)
 
-### 🔄 Futuras Collections
+### 🔄 Futuras Coleções
 - **Testes Funcionais:** Validações completas de funcionalidades
-- **Testes de Performance:** Carga e stress testing
+- **Testes de Performance:** Testes de carga e stress
 - **Testes de Segurança:** Validações de autenticação e autorização
 
 ## 🛡️ Política de Contribuição
@@ -104,8 +104,8 @@ Este repositório serve como base para conteúdo técnico compartilhado no Linke
 
 - ✅ **Estratégias de Teste de API**
 - ✅ **Automação com Postman**
-- ✅ **Boas Práticas de Testing**
-- ✅ **Collections Organizadas**
+- ✅ **Boas Práticas de Teste**
+- ✅ **Coleções Organizadas**
 - ✅ **Cenários de Teste Realistas**
 
 ## 🔧 Requisitos
@@ -123,10 +123,10 @@ npm install -g newman-reporter-html
 
 ## 📊 Métricas de Teste
 
-Cada collection inclui:
-- ✅ **Testes de Status Code**
+Cada coleção inclui:
+- ✅ **Testes de Código de Status**
 - ✅ **Validação de Schema**
-- ✅ **Testes de Response Time**
+- ✅ **Testes de Tempo de Resposta**
 - ✅ **Validação de Headers**
 - ✅ **Cenários Negativos**
 

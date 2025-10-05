@@ -1,8 +1,8 @@
-# 🔍 Testes Exploratórios - ServeRest API
+# 🔍 Testes Exploratórios - API ServeRest
 
 ## 📋 Descrição
 
-Esta collection contém testes exploratórios para a API ServeRest, focando na descoberta de funcionalidades, validações de endpoints e identificação de comportamentos não documentados.
+Esta coleção contém testes exploratórios para a API ServeRest, focando na descoberta de funcionalidades, validações de endpoints e identificação de comportamentos não documentados.
 
 ## 🎯 Objetivos dos Testes
 
@@ -65,17 +65,17 @@ Esta collection contém testes exploratórios para a API ServeRest, focando na d
 - Limpeza de dados entre testes
 
 ### Tests Scripts
-- Validação de status codes
+- Validação de códigos de status
 - Verificação de schemas JSON
-- Testes de performance (response time)
+- Testes de performance (tempo de resposta)
 - Validação de headers de segurança
 
 ## 📈 Métricas Esperadas
 
-- **Status Code Success Rate:** > 95%
-- **Response Time:** < 2000ms
-- **Schema Validation:** 100%
-- **Coverage:** Todos os endpoints principais
+- **Taxa de Sucesso dos Códigos de Status:** > 95%
+- **Tempo de Resposta:** < 2000ms
+- **Validação de Schema:** 100%
+- **Cobertura:** Todos os endpoints principais
 
 ## 🐛 Bugs Identificados
 
@@ -86,12 +86,12 @@ Esta collection contém testes exploratórios para a API ServeRest, focando na d
 - Todos os dados são criados e limpos automaticamente
 - Não deixa dados residuais no servidor
 - Testes podem ser executados repetidamente
-- Collection independente, não requer setup externo
+- Coleção independente, não requer configuração externa
 
 ## 🔄 Próximos Passos
 
 1. Expandir testes de segurança
-2. Adicionar testes de boundary values
+2. Adicionar testes de valores limite
 3. Implementar testes de carga básicos
 4. Adicionar validações de acessibilidade da API
 
