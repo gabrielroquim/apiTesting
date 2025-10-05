@@ -2,7 +2,7 @@
 
 > **Coleções de testes automatizados para a API ServeRest usando Postman**
 > 
-> 📝 *Conteúdo técnico compartilhado no LinkedIn sobre testes de API*
+> *Conteúdo técnico compartilhado no LinkedIn sobre testes de API*
 
 ## 🎯 Sobre o Projeto
 
@@ -10,7 +10,7 @@ Este repositório contém coleções de testes desenvolvidas para a API **[Serve
 
 > 🚧 **Projeto em Construção:** Este repositório está sendo constantemente aprimorado para se tornar uma referência completa em testes de API. Novas coleções e funcionalidades serão adicionadas regularmente.
 
-### 🔗 API Utilizada - ServeRest
+### API Utilizada - ServeRest
 - **URL Base:** `https://serverest.dev`
 - **Documentação:** [Documentação ServeRest](https://serverest.dev)
 - **Swagger:** [Documentação da API](https://serverest.dev/swagger)
@@ -105,10 +105,10 @@ newman run collections/exploratory-tests/testesExploratorios.json \
   - ✅ GET /usuarios (listar todos)
   - ✅ DELETE /usuarios/{id} (deletar)
 - **Funcionalidades Especiais:**
-  - 🎲 Geração automática de dados únicos (gandalf_XXXX)
-  - 🌈 Emails criativos com paleta de cores (mago_cor@hobbit.org)
-  - 🔄 Fluxo end-to-end completo com cleanup
-  - ⚡ Performance: ~13ms tempo médio
+  - Geração automática de dados únicos (gandalf_XXXX)
+  - Emails criativos com paleta de cores (mago_cor@hobbit.org)
+  - Fluxo end-to-end completo com cleanup
+  - Performance: ~13ms tempo médio
 - **Servidor:** ⚠️ **OBRIGATÓRIO** executar `npx serverest@latest`
 - **Base URL:** `http://localhost:3000`
 
@@ -121,11 +121,11 @@ newman run collections/exploratory-tests/testesExploratorios.json \
 
 ### ✅ Status Atual (100% Funcional)
 ```
-🧪 Requests executados: 5/5 ✅
-📝 Assertions validadas: 7/7 ✅  
-⚡ Tempo médio: 13ms
-🎯 Taxa de sucesso: 100%
-🔄 CI/CD: Funcionando
+Requests executados: 5/5 
+Assertions validadas: 7/7   
+Tempo médio: 13ms
+Taxa de sucesso: 100%
+CI/CD: Funcionando
 ```
 
 ### 🎲 Dados Dinâmicos Validados
@@ -137,7 +137,7 @@ newman run collections/exploratory-tests/testesExploratorios.json \
 ## 🛡️ Política de Contribuição
 
 ### ⚠️ Importante - Repositório Fork-Only
-- **✅ PERMITIDO:**
+- **PERMITIDO:**
   - **Fazer FORK** do repositório
   - **Download** das coleções
   - **Issues** para sugestões e dúvidas
@@ -167,12 +167,12 @@ Para sugestões ou dúvidas, **entre em contato pelo LinkedIn:**
 
 Este repositório serve como base para conteúdo técnico compartilhado no LinkedIn sobre:
 
-- ✅ **Estratégias de Teste de API** (implementadas)
-- ✅ **Automação com Postman** (CRUD completo validado)
-- ✅ **Boas Práticas de Teste** (dados dinâmicos únicos)
-- ✅ **Coleções Organizadas** (estrutura profissional)
-- ✅ **Cenários de Teste Realistas** (100% funcionais)
-- ✅ **CI/CD com GitHub Actions** (validação automática)
+-  **Estratégias de Teste de API** (implementadas)
+- **Automação com Postman** (CRUD completo validado)
+- **Boas Práticas de Teste** (dados dinâmicos únicos)
+- **Coleções Organizadas** (estrutura profissional)
+- **Cenários de Teste Realistas** (100% funcionais)
+- **CI/CD com GitHub Actions** (validação automática)
 
 **📱 Acompanhe:** [Gabriel Roquim](https://www.linkedin.com/in/gabsqa/)
 
@@ -192,12 +192,12 @@ npm install -g newman-reporter-html
 ## 📊 Métricas de Teste Validadas
 
 ### ✅ Testes Implementados e Funcionando
-- ✅ **Testes de Código de Status** (201, 200, 200, 200, 200)
-- ✅ **Validação de Mensagens** ("Cadastro realizado com sucesso", etc.)
-- ✅ **Testes de Campos Obrigatórios** (nome, email, administrador)
-- ✅ **Validação de Dados Únicos** (timestamp-based)
-- ✅ **Testes de Performance** (~13ms tempo médio)
-- ✅ **Cenários End-to-End** (criar → buscar → atualizar → listar → deletar)
+- **Testes de Código de Status** (201, 200, 200, 200, 200)
+- **Validação de Mensagens** ("Cadastro realizado com sucesso", etc.)
+- **Testes de Campos Obrigatórios** (nome, email, administrador)
+- **Validação de Dados Únicos** (timestamp-based)
+- **Testes de Performance** (~13ms tempo médio)
+- **Cenários End-to-End** (criar → buscar → atualizar → listar → deletar)
 
 ### 📈 Estatísticas Reais
 - **Total de Requests:** 5
