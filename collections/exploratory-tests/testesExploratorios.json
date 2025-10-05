@@ -360,9 +360,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Validar status 201 e mensagem de sucesso\", function () {",
+							"pm.test(\"Validar status 200 e mensagem de sucesso\", function () {",
 							"    // Verifica status code",
-							"    pm.expect(pm.response.code).to.eql(201);",
+							"    pm.expect(pm.response.code).to.eql(200);",
 							"    ",
 							"    // Verifica mensagem no JSON",
 							"    const responseJson = pm.response.json();",
