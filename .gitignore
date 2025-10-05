@@ -83,6 +83,12 @@ personal-notes.md
 TODO.md
 .personal/
 
+# Funcionalidades não implementadas ainda
+.github/ISSUE_TEMPLATE/
+CHANGELOG.md
+CHANGELOG.md.bak
+examples/test-results-screenshots/
+
 # Sistema operacional
 # Windows
 Thumbs.db

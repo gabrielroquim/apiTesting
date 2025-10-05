@@ -23,37 +23,15 @@ Este repositório serve como **portfólio pessoal** e base para **conteúdo do L
 
 ## 💡 Como Sugerir Melhorias
 
-Se você encontrou um bug ou tem uma sugestão:
+Se você encontrou um bug ou tem uma sugestão, **entre em contato comigo pelo LinkedIn**:
 
-1. **Abra uma Issue** descrevendo:
-   - O problema encontrado
-   - Comportamento esperado vs atual
-   - Screenshots (se aplicável)
-   - Sugestão de melhoria
+**📱 LinkedIn:** [Gabriel Roquim](https://www.linkedin.com/in/gabriel-roquim/)
 
-2. **Formate a Issue** seguindo o template:
-   ```markdown
-   ## Tipo
-   [ ] Bug
-   [ ] Sugestão
-   [ ] Dúvida
-   
-   ## Descrição
-   Descreva o problema ou sugestão
-   
-   ## Passos para Reproduzir (se bug)
-   1. Passo 1
-   2. Passo 2
-   3. Resultado atual
-   
-   ## Resultado Esperado
-   O que deveria acontecer
-   
-   ## Environment
-   - Postman Version: 
-   - OS: 
-   - Collection Version:
-   ```
+Descreva:
+- O problema encontrado
+- Comportamento esperado vs atual
+- Screenshots (se aplicável)  
+- Sugestão de melhoria
 
 ## 🔄 Como Usar em Seus Projetos
 
@@ -85,9 +63,8 @@ Para dúvidas sobre uso das collections, consulte:
 ## 📞 Contato
 
 Para questões específicas ou dúvidas técnicas:
-- **Issues:** Use o sistema de issues do GitHub
-- **LinkedIn:** Comente nos posts relacionados
-- **Email:** [Para questões urgentes apenas]
+- **📱 LinkedIn:** [Gabriel Roquim](https://www.linkedin.com/in/gabriel-roquim/)
+- **📧 Email:** gabriel.roquim@email.com
 
 ## 🙏 Agradecimentos
 
