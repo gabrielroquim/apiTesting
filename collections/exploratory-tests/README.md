@@ -18,50 +18,88 @@ O servidor será iniciado em `http://localhost:3000`
 
 ## 📊 Cobertura de Testes
 
+### 🔐 Autenticação
+- ✅ **Login Padrão** - POST /login
+  - Valida credenciais com usuário padrão (fulano@qa.com)
+  - Verifica status 200 para autenticação bem-sucedida
+  - Base para fluxos que requerem autenticação
+
 ### 👤 Usuários (/usuarios) - CRUD Completo
 - ✅ **Cadastrar usuários** - POST /usuarios
-  - Gera dados aleatórios (nome como "gandalf_XXXX", email com paleta de cores)
+  - **Geração inteligente de dados** com configurações centralizadas
+  - **Senhas seguras** com caracteres especiais e comprimento mínimo
+  - **Emails únicos** usando timestamp para evitar duplicatas
+  - **Logs detalhados** para rastreabilidade com mascaramento de senhas
   - Valida status 201 e mensagem de sucesso
-  - Salva ID do usuário criado
+  - Salva ID do usuário criado automaticamente
 - ✅ **Buscar usuário por ID** - GET /usuarios/{id}
   - Valida status 200
   - Verifica se o perfil é administrador
 - ✅ **Atualizar usuário** - PUT /usuarios/{id}
   - Usa dados aleatórios do Postman ($randomFirstName, $randomEmail)
-  - Valida status 201 e mensagem "Registro alterado com sucesso"
+  - Valida status 200 e mensagem "Registro alterado com sucesso"
 - ✅ **Listar usuários** - GET /usuarios
   - Valida status 200
   - Verifica campos obrigatórios (nome, email, password, administrador)
+  - Documentação completa do endpoint com exemplos
 - ✅ **Deletar usuário por ID** - DELETE /usuarios/{id}
   - Valida mensagem "Registro excluído com sucesso"
+  - Documentação detalhada do processo de exclusão
 
 ## 🔄 Fluxo de Execução
-A collection executa um CRUD completo de usuários:
-1. **Cadastra** um usuário com dados únicos
-2. **Busca** o usuário criado por ID
-3. **Atualiza** os dados do usuário
-4. **Lista** todos os usuários
-5. **Deleta** o usuário criado
+A collection executa um fluxo completo de autenticação e CRUD de usuários:
+1. **Login** com credenciais padrão para estabelecer sessão
+2. **Cadastra** um usuário com dados únicos e seguros
+3. **Busca** o usuário criado por ID
+4. **Atualiza** os dados do usuário
+5. **Lista** todos os usuários
+6. **Deleta** o usuário criado
 
 ## 🧪 Funcionalidades de Teste
 
 ### 🎲 Geração Dinâmica de Dados
+#### 🔧 Configurações Centralizadas
+```javascript
+const config = {
+    prefixoUsuario: 'gandalf',
+    dominio: 'cinzento.org',
+    senhaMinLength: 8
+};
+```
+
+#### 🎯 Padrões de Dados Gerados
 - **Nomes:** `gandalf_` + número aleatório (0-9999)
-- **Senhas:** `senha` + número aleatório (0-9999)
-- **Emails:** `mago_` + cor aleatória + `@hobbit.org`
-- **Paleta de cores:** 25+ cores diferentes para emails únicos
+- **Senhas Seguras:** String alfanumérica + `@` + número (mínimo 8 caracteres)
+- **Emails Únicos:** `mago_` + cor aleatória + `_` + timestamp + `@cinzento.org`
+- **Paleta de cores:** 25+ cores diferentes para garantir unicidade
+- **Timestamp:** Uso de `Date.now()` para evitar duplicatas
+
+#### 🔍 Logs e Rastreabilidade
+- Console detalhado com dados gerados
+- Mascaramento automático de senhas nos logs
+- Armazenamento em environment variables para uso posterior
+- Timestamp para auditoria
 
 ### ✅ Validações Implementadas
-- Status codes (200, 201, 400)
-- Mensagens de resposta específicas
-- Campos obrigatórios nas respostas
-- Persistência de dados (ID do usuário entre requests)
+- **Status codes:** 200, 201, 400 com validações específicas
+- **Mensagens de resposta:** Validação exata de textos esperados
+- **Campos obrigatórios:** Verificação completa nas respostas JSON
+- **Persistência de dados:** ID do usuário compartilhado entre requests
+- **Autenticação:** Validação de login e perfis de usuário
+- **Segurança:** Mascaramento de dados sensíveis nos logs
 
 ### 📝 Cenários de Teste
-- ✅ Casos de sucesso (201 Created, 200 OK)
-- ✅ Casos de erro (400 Bad Request - email duplicado, email inválido)
-- ✅ Responses de exemplo documentados
-- ✅ Validação de campos obrigatórios
+- ✅ **Login bem-sucedido** (200 OK)
+- ✅ **Cadastros de sucesso** (201 Created)
+- ✅ **Consultas efetivas** (200 OK)
+- ✅ **Atualizações válidas** (200 OK)
+- ✅ **Exclusões confirmadas** (200 OK)
+- ✅ **Casos de erro documentados:**
+  - 400 Bad Request - email duplicado
+  - 400 Bad Request - email inválido
+  - 400 Bad Request - administrador deve ser 'true' ou 'false'
+- ✅ **Responses de exemplo** completos e atualizados
+- ✅ **Documentação detalhada** de endpoints
 
 ## 🔧 Configuração Técnica
 
@@ -69,28 +107,35 @@ A collection executa um CRUD completo de usuários:
 ```json
 {
   "idUsuario": "",
-  "administrador": "true",
-  "baseUrl": "http://localhost:3000"
+  "administrador": "true"
 }
 ```
 
-### Pre-request Scripts
-- Geração automática de nomes únicos
-- Criação de emails com paleta de cores aleatória
-- Configuração de senhas dinâmicas
+### 🔧 Scripts Avançados
 
-### Test Scripts
-- Validação de status codes específicos
-- Verificação de mensagens de resposta
-- Salvamento de IDs para uso posterior
-- Verificação de campos obrigatórios
+#### Pre-request Scripts
+- **Configurações centralizadas** para facilitar manutenção
+- **Geração automática** de nomes únicos com prefixo personalizado
+- **Criação de emails únicos** usando timestamp para evitar conflitos
+- **Senhas seguras** com caracteres especiais e validação de comprimento
+- **Logs detalhados** com mascaramento de dados sensíveis
+- **Paleta de cores dinâmica** com 25+ opções
+
+#### Test Scripts
+- **Validação rigorosa** de status codes específicos
+- **Verificação exata** de mensagens de resposta
+- **Salvamento automático** de IDs para uso posterior
+- **Verificação completa** de campos obrigatórios
+- **Validação de perfis** (administrador/usuário comum)
 
 ## 📈 Métricas Esperadas
 
 - **Taxa de Sucesso:** 100% (quando servidor local está rodando)
 - **Tempo de Resposta:** < 100ms (servidor local)
-- **Cobertura:** CRUD completo de usuários
-- **Validações:** 15+ testes automatizados
+- **Cobertura:** Login + CRUD completo de usuários
+- **Validações:** 20+ testes automatizados
+- **Segurança:** Dados sensíveis mascarados nos logs
+- **Unicidade:** 0% chance de conflito por email duplicado
 
 ## 🚨 Requisitos Importantes
 
@@ -100,22 +145,30 @@ A collection executa um CRUD completo de usuários:
 
 ## 📝 Observações
 
-- Collection completamente independente
-- Não requer autenticação prévia
-- Dados são criados e removidos automaticamente
-- Pode ser executada repetidamente sem conflitos
-- Focada em testes exploratórios do endpoint /usuarios
+- **Collection completamente independente** com dados auto-gerados
+- **Login automatizado** para fluxos que requerem autenticação
+- **Dados únicos garantidos** através de timestamp
+- **Segurança aprimorada** com mascaramento de senhas
+- **Logs detalhados** para debugging e auditoria
+- **Configurações centralizadas** para fácil manutenção
+- **Pode ser executada repetidamente** sem conflitos
+- **Focada em testes exploratórios** dos endpoints de autenticação e usuários
+- **Senhas robustas** seguindo boas práticas de segurança
 
 ## 🔄 Próximos Passos
 
-1. Expandir para outros endpoints (produtos, login, carrinhos)
-2. Adicionar testes de cenários negativos
-3. Implementar validações de schema JSON
-4. Adicionar testes de performance
+1. **Expandir autenticação** para outros fluxos (tokens, refresh)
+2. **Adicionar outros endpoints** (produtos, carrinhos, pedidos)
+3. **Implementar testes de cenários negativos** avançados
+4. **Validações de schema JSON** com bibliotecas especializadas
+5. **Testes de performance** e carga
+6. **Integração com CI/CD** para execução automatizada
+7. **Relatórios detalhados** com métricas de performance
 
 ---
 
 **Criado por:** Gabriel  
 **Data:** Outubro 2025  
-**Foco:** CRUD completo de usuários com dados dinâmicos  
-**LinkedIn:** [Post sobre testes exploratórios](#)
+**Versão:** 2.0 - Atualização Completa  
+**Foco:** Login + CRUD completo com dados seguros e únicos  
+**Melhorias:** Logs detalhados, senhas seguras, emails únicos por timestamp
