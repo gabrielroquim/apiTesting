@@ -19,10 +19,10 @@ jobs:
         node-version: [18.x, 20.x]
     
     steps:
-    - name: 📥 Checkout repository
+    - name:  Checkout repository
       uses: actions/checkout@v4
       
-    - name: 🟢 Setup Node.js ${{ matrix.node-version }}
+    - name:  Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}

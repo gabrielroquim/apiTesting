@@ -1,12 +1,71 @@
 {
 	"info": {
-		"_postman_id": "c8d1d67c-5c75-4688-8a61-757b052ece2d",
+		"_postman_id": "a45c3492-c8c8-4bff-8ae9-0e42ea9ae7c7",
 		"name": "1 - Testes Exploratorios",
 		"description": "#### 1\\. Listar Usuários\n\n- **Método:** GET\n    \n- **URL:** `/usuarios`\n    \n- **Descrição:** Retorna uma lista de todos os usuários cadastrados.\n    \n- **Resposta:**\n    \n- **200 OK:** Lista de usuários em formato JSON.\n    \n- **500 Internal Server Error:** Erro interno do servidor.\n    \n\n#### 2\\. Buscar Usuário\n\n- **Método:** GET\n    \n- **URL:** `/usuarios/{id}`\n    \n- **Descrição:** Retorna os detalhes de um usuário específico.\n    \n- **Parâmetros:**\n    \n- `id` (path): ID do usuário a ser buscado.\n    \n- **Resposta:**\n    \n- **200 OK:** Detalhes do usuário em formato JSON.\n    \n- **404 Not Found:** Usuário não encontrado.\n    \n\n#### 3\\. Cadastrar Usuário\n\n- **Método:** POST\n    \n- **URL:** `/usuarios`\n    \n- **Descrição:** Cadastra um novo usuário.\n    \n- **Corpo da Requisição:** Objeto JSON com as informações do usuário.\n    \n- **Resposta:**\n    \n- **201 Created:** Usuário cadastrado com sucesso.\n    \n- **400 Bad Request:** Requisição inválida.\n    \n\n#### 4\\. Atualizar Usuário\n\n- **Método:** PUT\n    \n- **URL:** `/usuarios/{id}`\n    \n- **Descrição:** Atualiza as informações de um usuário existente.\n    \n- **Parâmetros:**\n    \n- `id` (path): ID do usuário a ser atualizado.\n    \n- **Corpo da Requisição:** Objeto JSON com as informações atualizadas do usuário.\n    \n- **Resposta:**\n    \n- **200 OK:** Usuário atualizado com sucesso.\n    \n- **404 Not Found:** Usuário não encontrado.\n    \n\n#### 5\\. Deletar Usuário\n\n- **Método:** DELETE\n    \n- **URL:** `/usuarios/{id}`\n    \n- **Descrição:** Deleta um usuário existente.\n    \n- **Parâmetros:**\n    \n- `id` (path): ID do usuário a ser deletado.\n    \n- **Resposta:**\n    \n- **204 No Content:** Usuário deletado com sucesso.\n    \n- **404 Not Found:** Usuário não encontrado.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28339579"
 	},
 	"item": [
+		{
+			"name": "Login Padrão",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"fulano@qa.com\",\n  \"password\": \"teste\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login?email=fulano@qa.com",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "administrador",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "fulano@qa.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "Cadastrar usuarios",
 			"event": [
@@ -24,11 +83,7 @@
 							"\r",
 							"// Salva a resposta JSON para uso futuro\r",
 							"const resposta = pm.response.json();\r",
-							"pm.collectionVariables.set(\"idUsuario\", resposta._id);\r",
-							"\r",
-							"\r",
-							"\r",
-							""
+							"pm.collectionVariables.set(\"idUsuario\", resposta._id);"
 						],
 						"type": "text/javascript",
 						"packages": {},
@@ -39,30 +94,56 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"// Gerar um nome aleatório\r",
-							"pm.variables.set('nomeUsuario', `gandalf_${Math.floor(Math.random() * 10000)}`);\r",
+							"// Configurações\r",
+							"const config = {\r",
+							"    prefixoUsuario: 'gandalf',\r",
+							"    dominio: 'cinzento.org',\r",
+							"    senhaMinLength: 8\r",
+							"};\r",
 							"\r",
-							"// Gerar uma senha aleatória\r",
-							"pm.variables.set('senhaUsuario', `senha${Math.floor(Math.random() * 10000)}`);\r",
-							"\r",
-							"\r",
-							"// Função para gerar paleta de cores aleatória\r",
-							"function paletadcores() {\r",
-							"    const cores = [\r",
-							"        'vermelho', 'azul', 'verde', 'amarelo', 'roxo', 'laranja', 'rosa', \r",
-							"        'marrom', 'preto', 'branco', 'cinza', 'violeta', 'turquesa', 'dourado', \r",
-							"        'prata','coral', 'magenta', 'ciano', 'bege', 'aqua', 'navy', 'olive', \r",
-							"        'crimson', 'khaki', 'plum'\r",
-							"    ];\r",
-							"    \r",
-							"    // Seleciona uma cor aleatória\r",
-							"    const corEscolhida = cores[Math.floor(Math.random() * cores.length)];\r",
-							"    \r",
-							"    return `${corEscolhida}`;\r",
+							"// Função auxiliar para gerar string aleatória\r",
+							"function gerarStringAleatoria(length = 8) {\r",
+							"    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"    let result = '';\r",
+							"    for (let i = 0; i < length; i++) {\r",
+							"        result += chars.charAt(Math.floor(Math.random() * chars.length));\r",
+							"    }\r",
+							"    return result;\r",
 							"}\r",
 							"\r",
-							"// Gerar um email dinâmico com paleta de cores\r",
-							"pm.variables.set('emailUsuario', `mago_${paletadcores()}@hobbit.org`);\r",
+							"// Gerar nome de usuário\r",
+							"const numeroAleatorio = Math.floor(Math.random() * 10000);\r",
+							"const nomeUsuario = `${config.prefixoUsuario}_${numeroAleatorio}`;\r",
+							"pm.variables.set('nomeUsuario', nomeUsuario);\r",
+							"\r",
+							"// Gerar senha forte\r",
+							"const senhaUsuario = `${gerarStringAleatoria(config.senhaMinLength)}@${numeroAleatorio}`;\r",
+							"pm.variables.set('senhaUsuario', senhaUsuario);\r",
+							"\r",
+							"// Paleta de cores\r",
+							"const cores = [\r",
+							"    'vermelho', 'azul', 'verde', 'amarelo', 'roxo', 'laranja', 'rosa', \r",
+							"    'marrom', 'preto', 'branco', 'cinza', 'violeta', 'turquesa', 'dourado', \r",
+							"    'prata', 'coral', 'magenta', 'ciano', 'bege', 'aqua', 'navy', 'olive', \r",
+							"    'crimson', 'khaki', 'plum'\r",
+							"];\r",
+							"\r",
+							"// Gerar email único\r",
+							"const corAleatoria = cores[Math.floor(Math.random() * cores.length)];\r",
+							"const timestamp = Date.now();\r",
+							"const emailUsuario = `mago_${corAleatoria}_${timestamp}@${config.dominio}`;\r",
+							"pm.variables.set('emailUsuario', emailUsuario);\r",
+							"\r",
+							"// Armazenar dados no environment para uso posterior\r",
+							"pm.environment.set('ultimo_usuario_criado', nomeUsuario);\r",
+							"pm.environment.set('ultimo_email_criado', emailUsuario);\r",
+							"\r",
+							"// Log para rastreabilidade// validar no Console POSTMAN\r",
+							"console.log('=== Dados de Teste Gerados ===');\r",
+							"console.log('Usuário:', nomeUsuario);\r",
+							"console.log('Email:', emailUsuario);\r",
+							"console.log('Senha:', senhaUsuario.replace(/./g, '*')); //Ex. Mascarar senha no log\r",
+							"console.log('Timestamp:', timestamp);\r",
 							""
 						],
 						"type": "text/javascript",
@@ -90,18 +171,6 @@
 					],
 					"path": [
 						"usuarios"
-					],
-					"query": [
-						{
-							"key": "administrador",
-							"value": "true",
-							"disabled": true
-						},
-						{
-							"key": "email",
-							"value": "fulano@qa.com",
-							"disabled": true
-						}
 					]
 				}
 			},
@@ -183,7 +252,7 @@
 					"body": "{\n    \"message\": \"Este email já está sendo usado\"\n}"
 				},
 				{
-					"name": "Email inválido",
+					"name": "Deve ser True ou False",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
@@ -197,7 +266,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/usuarios",
+							"raw": "{{baseUrl}}/usuarios?administrador=true",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -207,13 +276,7 @@
 							"query": [
 								{
 									"key": "administrador",
-									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "email",
-									"value": "fulano@qa.com",
-									"disabled": true
+									"value": "true"
 								}
 							]
 						}
@@ -256,11 +319,11 @@
 						},
 						{
 							"key": "Content-Length",
-							"value": "50"
+							"value": "115"
 						},
 						{
 							"key": "Date",
-							"value": "Sun, 05 Oct 2025 18:53:03 GMT"
+							"value": "Sun, 12 Oct 2025 16:56:01 GMT"
 						},
 						{
 							"key": "Connection",
@@ -272,7 +335,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"email\": \"email deve ser um email válido\"\n}"
+					"body": "{\n    \"email\": \"email deve ser um email válido\",\n    \"administrador\": \"administrador deve ser 'true' ou 'false'\"\n}"
 				}
 			]
 		},
@@ -408,18 +471,6 @@
 						"usuarios",
 						":_id"
 					],
-					"query": [
-						{
-							"key": "administrador",
-							"value": "true",
-							"disabled": true
-						},
-						{
-							"key": "email",
-							"value": "fulano@qa.com",
-							"disabled": true
-						}
-					],
 					"variable": [
 						{
 							"key": "_id",
@@ -544,14 +595,19 @@
 							""
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				},
 				{
 					"listen": "prerequest",
 					"script": {
-						"exec": [],
-						"type": "text/javascript"
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
@@ -565,18 +621,6 @@
 					],
 					"path": [
 						"usuarios"
-					],
-					"query": [
-						{
-							"key": "administrador",
-							"value": "true",
-							"disabled": true
-						},
-						{
-							"key": "email",
-							"value": "fulano@qa.com",
-							"disabled": true
-						}
 					]
 				},
 				"description": "StartFragment\n\n## Endpoint GET Usuários\n\n### Visão Geral\n\nEste endpoint recupera uma lista de usuários do sistema. É uma requisição HTTP GET simples que não requer parâmetros.\n\n### Requisição\n\n- **Método:** GET\n    \n- **URL:** `{{baseUrl}}/usuarios`\n    \n\n## Resposta\n\nA resposta retornará um objeto JSON contendo os seguintes campos:\n\n- `quantidade`: Um inteiro que representa o número total de usuários recuperados.\n    \n- `usuarios`: Uma matriz de objetos de usuário, onde cada objeto de usuário contém:\n    \n- `nome`: O nome do usuário (string).\n    \n- `email`: O endereço de e-mail do usuário (string).\n    \n- `password`: A senha do usuário (string).\n    \n- `administrador`: Um booleano que indica se o usuário tem privilégios administrativos.\n    \n- `_id`: Um identificador único para o usuário (string).\n    \n\n## Exemplo de Resposta\n\n``` json\n{\n  \"quantidade\": 1,\n  \"usuarios\": [\n    {\n      \"nome\": \"Fulano da Silva\",\n      \"email\": \"fulano@qa.com\",\n      \"password\": \"teste\",\n      \"administrador\": true,\n      \"_id\": \".ssdddsds3343\"\n    }\n  ]\n}\n\n ```\n\n## Notes\n\nEste endpoint é útil para aplicativos que precisam exibir informações de usuário ou gerenciar funcionalidades relacionadas a usuários.\n\nSe não houver usuários no sistema, o campo `quantidade` será 0 e a matriz `usuarios` estará vazia."
@@ -852,11 +896,11 @@
 		},
 		{
 			"key": "administrador",
-			"value": "true"
-		},
-		{
-			"key": "baseUrl",
-			"value": "http://localhost:3000"
+			"value": "true",
+			"description": {
+				"content": "Perfil administrador:",
+				"type": "text/plain"
+			}
 		}
 	]
 }
